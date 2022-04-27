@@ -117,6 +117,22 @@ export default function Admin_pannel({navigation}) {
             })
         }
 
+        const catchQueue = async (userid, selectedDate, hour) =>{
+            await client.post("/events/AdminCatchQueue", {'userid' : userid,'date': selectedDate, 'hour': hour}, 
+            { 
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then((response) =>{
+                setCatchH(response.data.events);
+                setIndicator(!indicator);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        }
+
         const showAlert = () => {
             Alert.alert('ביטול תור', 
                         `האם את בטוחה שאת רוצה לבטל את התור? (אל תשכחי לעדכן את ${item.user.username})`,
@@ -186,7 +202,8 @@ export default function Admin_pannel({navigation}) {
 
                         </View>
                         <View>
-                            <Pressable style={[styles.button, styles.buttonOpen]} onPress={() => console.log("oh")} >
+                            <Pressable style={[styles.button, styles.buttonOpen]} onPress={() => catchQueue(user.id, selectedDate, item.hour)} >
+                            
                                 <Text style={{fontSize: 14}}>ביטול התור</Text>
                             </Pressable>
                         </View>
