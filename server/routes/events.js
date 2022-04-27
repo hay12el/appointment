@@ -196,6 +196,60 @@ router.post("/AdminDeleteQueue", async (req, res) => {
 
 ///////////////
 
+router.post("/AdminCatchQueue", async (req, res) => {
+    console.log(req.body);
+    var dateObj = new Date(req.body.date);
+    var month = dateObj.getUTCMonth(); //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+    var hourN = req.body.hour;
+    var time = new Date(year, month, day, hourN + 3);
+    console.log(time);
+
+    const queue = new Event({
+        admin: req.body.userid,
+        time: time,
+        connectTo: req.body.userid
+    });
+    queue.save();
+    User.findOneAndUpdate({ _id: req.body.userid }, { $push: { queues: queue } }, (err) => {
+        if (!err) {
+            console.log("Success");
+        } else {
+            console.log("No Success");
+        }
+    });
+
+    const Theuser = async(x) => { 
+        return await User.find({_id: x});
+    }
+    var Day = new Date(year, month, day, 00);
+    var nextDay = new Date(year, month, day+1, 00);
+    await Event.find({time: {$gte: Day, 
+                                $lt: nextDay}}).then(async(response) => {
+                                               var s = [];
+                                               console.log(response);
+                                               for (var i = 0; i < response.length; i++) {
+                                                    var temp = {};
+                                                    temp["postId"] = response[i]._id
+                                                    var h = new Date(response[i].time);
+                                                    temp["hour"] = h.getUTCHours();
+                                                    h = (response[i].connectTo).toString();
+                                                    console.log(h);
+                                                    temp["user"] = await Theuser(h);
+                                                    s.push(temp);
+                                               } 
+                                               const hours = response.map(x => new Date(x.time))
+                                               const hoursToReturn = hours.map(x => x.getUTCHours())
+                                               return res.send({"events": s})
+                                           }).catch((err)=>{
+                                               console.log(err);
+                                           })
+                  
+})
+
+///////////////
+
 router.post('/getMyQueue', async (req, res) => {
     var today = new Date();
     var yesterday = today - 24*60*60*1000;
