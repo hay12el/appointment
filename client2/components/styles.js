@@ -73,7 +73,7 @@ const StatusBarHeight = Constants.statusBarHeight;
  export const StyledInputLabel = styled.Text`
    color: ${tertiary};
    font-size: 13px;
-   text-align: left;
+   text-align: center;
  `;
 
  export const LeftIcon = styled.View`

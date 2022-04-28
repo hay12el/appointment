@@ -314,6 +314,7 @@ export default function Admin_pannel({navigation}) {
                     />
                     <View style={styles.FLcontainer}>
                         <FlatList 
+                            
                             data={hours}
                             renderItem={({item}) => {
                                 //check if hour is catched
@@ -344,12 +345,7 @@ export default function Admin_pannel({navigation}) {
                             }}
                             
                         />
-                        <ActivityIndicator
-                            style={styles.loading}
-                            size="large" 
-                            color="#0000ff"
-                            animating={thinking}
-                        />
+                        
                         
                         
                             
@@ -358,8 +354,8 @@ export default function Admin_pannel({navigation}) {
 
                     </View>
                 </View>
-                <View style={{display: 'flex',justifyContent: 'center', alignContent: 'center', position: "absolute", bottom: 7,right: 0, width: "100%"}}>        
-                    <View style={{display: 'flex', alignItems: 'center'}}>
+                <View style={{display: 'flex',justifyContent: 'center', alignContent: 'center', position: "relative", width: "100%",backgroundColor:"white"}}>        
+                    <View style={{display: 'flex', alignItems: 'center',marginBottom:25}}>
                         <View style={ styles.menuNavigator }>
     
                             
@@ -380,6 +376,12 @@ export default function Admin_pannel({navigation}) {
                         </View>
                     </View>
                 </View>
+                <ActivityIndicator
+                    style={styles.loading}
+                    size="large" 
+                    color="#0000ff"
+                    animating={thinking}
+                />
             </View>
                 
            
@@ -400,11 +402,19 @@ const styles = StyleSheet.create({
         paddingHorizontal: 22
     },
     FLcontainer: {
+        paddingBottom:"10%",
         height:'45%', 
         width: '97%', 
         borderRadius:5,
     },
     button: {
+        shadowColor: "#000",
+                        shadowOffset: {
+                            width: 0,
+                            height: 2,
+                        },
+                        shadowOpacity: 0.25,
+                        shadowRadius: 3.84,
         backgroundColor: '#FFE2E2',
         borderRadius: 15,
         padding: 4,
@@ -450,10 +460,10 @@ const styles = StyleSheet.create({
   },
   loading: {
         position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
+        height:30,
+        width:78,
+        left: "50%",
+        top: "50%",
         alignItems: 'center',
         justifyContent: 'center'
   },
@@ -477,6 +487,13 @@ const styles = StyleSheet.create({
     height: 40
   },
   buttonOpen: {
+      shadowColor: "#000",
+                        shadowOffset: {
+                            width: 0,
+                            height: 2,
+                        },
+                        shadowOpacity: 0.25,
+                        shadowRadius: 3.84,
     backgroundColor: "#fafafa",
   },
   modal: {  

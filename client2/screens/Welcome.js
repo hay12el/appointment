@@ -99,6 +99,7 @@ const Welcome = ({navigation}) => {
                   <View style={{width: "30%", backgroundColor: "#FFE2E2", borderTopRightRadius:15, borderBottomRightRadius:15, height: 50, alignItems: "center", justifyContent: "center"}}>
                     <Text style={{color: "#364F6B", fontSize: 16}}>על עצמי</Text>
                   </View>
+                  
                   <View style={{margin:10,height: 130,padding: 12, backgroundColor: "white", borderRadius: 12, elevation:6,shadowColor: "#000",
                     shadowOffset: {
                       width: 0,

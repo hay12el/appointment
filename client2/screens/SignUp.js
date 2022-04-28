@@ -96,7 +96,7 @@ const SignUp = ({navigation}) => {
     }
 
     return (
-        <SafeAreaView style={{flex:1,paddingTop: Platform.OS === "android" ? 45 : 0}}>
+        <SafeAreaView style={{flex:1,paddingTop: Platform.OS === "android" ? 45 : 0, backgroundColor:"white"}}>
 
                 <View style={{width: "100%", height: 180, display: "flex",justifyContent:"center", alignItems:"center",borderBottomLeftRadius:18, borderBottomRightRadius:18 ,backgroundColor:"#FFC7C7"}}>
                     <Image source={require('../assets/11.png')} style={{height:180, width:180}}></Image>
@@ -108,14 +108,18 @@ const SignUp = ({navigation}) => {
             <StatusBar style="dark" />
             <InnerContainer >
                 {show && (
+                    
                     <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
-                    mode='date'
-                    is24Hour={true}
-                    display="default"
-                    onChange={onChange}
+                        locale="es-ES"
+                        style={{width:'100%'}}
+                        testID="dateTimePicker"
+                        value={date}
+                        mode="date"
+                        is24Hour={true}
+                        display="spinner"
+                        onChange={onChange}
                     />
+                    
                     )}
                 <Formik
                     initialValues={{name: '',dateOfBirth: Date ,email: '',phone: '', password:'', confirmPassword:''}}
@@ -246,7 +250,7 @@ const MyTextInput = ({label, icon, isPassword, hidePassword,
             <StyledInputLabel>{label}</StyledInputLabel>
             {!isDate && <StyledTextInput {...props} />}
             {isDate && <TouchableOpacity onPress={() => showDatePicker()}>
-                <StyledTextInput {...props} />
+                    <StyledTextInput {...props} />
                 </TouchableOpacity>}
             {isPassword && (
 

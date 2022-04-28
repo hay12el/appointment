@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
+import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View ,Button, Pressable, FlatList, TouchableOpacity, Image ,Modal, Text, ActivityIndicator} from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import client from '../api/client';
@@ -6,6 +7,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { UserContext } from '../contexts/userContexts';
 import {API, ADMIN_ID} from '@env';
 import { Overlay } from 'react-native-elements';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const days = {  0: "ראשון",
                 1: "שני", 
@@ -107,8 +109,9 @@ export default function Calendar(navigation) {
     };
 
     return (
+        
         <View style={{display: 'flex',justifyContent: "center", alignContent: 'center'}}>
-
+            <StatusBar style="dark" />
             <TouchableOpacity activeOpacity={0.1} onPress={()=> visi()} style={ styles.touchi }>
                 <FontAwesome name="plus" size={32} color="white" />
             </TouchableOpacity>
@@ -117,7 +120,7 @@ export default function Calendar(navigation) {
                 visible={toApear} 
                 animationType="slide" 
                 onRequestClose={() => visi() }
-                
+                transparent={true}
                 >
                 
                 <Overlay isVisible={Success} onBackdropPress={toggleOverlay}>
@@ -140,7 +143,13 @@ export default function Calendar(navigation) {
                         <Text style={{fontSize:15}}>שימי לב שצריך שבוע בין תור לתור</Text>
                     </View>
                 </Overlay>
-
+                <View
+                        style={{
+                        height: '80%',
+                        marginTop: 'auto',
+                        width:"100%",
+                        
+                        }}>
                 <View style={styles.container}>
                     <Modal            
                         animationType = {"fade"}  
@@ -226,7 +235,7 @@ export default function Calendar(navigation) {
                     </View>
                     <View style={styles.FLcontainer}>
                         <FlatList 
-                            nestedScrollEnabled
+                            
                             horizontal
                             data={hours}
                             renderItem={({item}) => {
@@ -257,20 +266,19 @@ export default function Calendar(navigation) {
                             }}
                             
                         />
+                    </View>
+                        
+                </View>
                         <ActivityIndicator
                             style={styles.loading}
                             size="large" 
                             color="#0000ff"
                             animating={thinking}
-                        />
-                        
-                    </View>
-                        
-                </View>
+                            />
                 <TouchableOpacity activeOpacity={0.1} onPress={()=> visi(!visible)} style={ styles.touchiArrow}>
                     <FontAwesome name="arrow-down" size={30} color="white" />
                 </TouchableOpacity>
-                
+                </View>
             </Modal>
         </View>
 
@@ -351,10 +359,10 @@ const styles = StyleSheet.create({
   },
   loading: {
         position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
+        height:30,
+        width:78,
+        left: "50%",
+        top: "50%",
         alignItems: 'center',
         justifyContent: 'center'
   },

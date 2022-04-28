@@ -83,7 +83,7 @@ const Welcome_admin = ({navigation}) => {
     return (
       <View style={{height: "100%", flex: 1, backgroundColor: "white", paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0, paddingBottom: 80}}>
 
-      <View style={{height: "100%", flex: 1, backgroundColor: "#F6F6F6"}}>
+      <View style={{height: "100%", flex: 1, backgroundColor: "white"}}>
               <View style={{height: 170, display: "flex",justifyContent:"center", alignItems:"center",borderBottomLeftRadius:18, borderBottomRightRadius:18 ,backgroundColor:"#FFC7C7", marginTop: 42}}>
                 <Image source={require('../assets/11.png')} style={{height:180, width:180}}></Image>
                 {/* <Text style={{fontSize:30, color: "#364F6B", marginTop: 0}}>נעמה כהן</Text> */}
@@ -99,7 +99,13 @@ const Welcome_admin = ({navigation}) => {
                   <View style={{width: "30%", backgroundColor: "#FFE2E2", borderTopRightRadius:15, borderBottomRightRadius:15, height: 50, alignItems: "center", justifyContent: "center"}}>
                     <Text style={{color: "#364F6B", fontSize: 16}}>על עצמי</Text>
                   </View>
-                  <View style={{margin:10,height: 130,padding: 12, backgroundColor: "white", borderRadius: 12, elevation:6}}>
+                  <View style={{margin:10,height: 130,padding: 12, backgroundColor: "white", borderRadius: 12, elevation:6,shadowColor: "#000",
+                    shadowOffset: {
+                      width: 0,
+                      height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 3.84}}>
                     <Text style={{color: "#364F6B", fontSize: 16, textAlign: "center"}}>נעים להכיר :) </Text>
                     <Text style={{color: "#364F6B", fontSize: 16, textAlign: "center"}}>
 אני עושה לק ג'ל עם מניקור בתשומת לב מירבית - אשמח לקבל אתכן ולעזור לשמור על הציפורניים שלכן יפות ומטופחות לאורך זמן.</Text>
@@ -113,7 +119,13 @@ const Welcome_admin = ({navigation}) => {
                   <View style={{width: "30%", backgroundColor: "#FFE2E2", borderTopRightRadius:15, borderBottomRightRadius:15, height: 50, alignItems: "center", justifyContent: "center"}}>
                     <Text style={{color: "#364F6B", fontSize: 16}}>העבודות שלי</Text>
                   </View>
-                  <View style={{height: 250,margin:10, elevation:17, backgroundColor: "white", borderRadius:10}}>
+                  <View style={{height: 250,margin:10, elevation:17, backgroundColor: "white", borderRadius:10,shadowColor: "#000",
+                    shadowOffset: {
+                      width: 0,
+                      height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 3.84}}>
                     <FlatList
                       data={SECTIONS}
                       renderItem={({ item }) => <ListItem item={item} />}
@@ -135,7 +147,13 @@ const Welcome_admin = ({navigation}) => {
               </View>
             </View>
             {/* style={{margin:15,height: 130,padding: 12, backgroundColor: "#F6F6F6", borderRadius: 12}} */}
-            <View style={{margin:90,height: 70,display: "flex", flexDirection:"row", alignItems: "center", justifyContent: "center",marginBottom: 20, marginTop:30, backgroundColor: "white", borderRadius: 12, elevation:8}}>
+            <View style={{margin:90,height: 70,display: "flex", flexDirection:"row", alignItems: "center", justifyContent: "center",marginBottom: 20, marginTop:30, backgroundColor: "white", borderRadius: 12, elevation:8,shadowColor: "#000",
+                    shadowOffset: {
+                      width: 0,
+                      height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 3.84}}>
               <TouchableOpacity>
                 <AntDesign name="instagram" size={40} color="black" />
               </TouchableOpacity>
@@ -159,13 +177,13 @@ const Welcome_admin = ({navigation}) => {
 
     </View>
             {/* Navigation Bar */}
-            <View style={{display: 'flex',justifyContent: 'center', alignContent: 'center', position: "absolute", bottom: 7,right: 0, width: "100%"}}>        
+            <View style={{display: 'flex',justifyContent: 'center', alignContent: 'center', position: "absolute", bottom: 23,right: 0, width: "100%"}}>        
                     <View style={{display: 'flex', alignItems: 'center'}}>
                         <View style={ styles.menuNavigator }>
     
                             
                               
-                            <TouchableOpacity onPress={() => navigation.navigate("Welcome") } >
+                            <TouchableOpacity>
                                 <Ionicons name="home-outline" size={30} color="#364F6B" />
                             </TouchableOpacity>
                             
