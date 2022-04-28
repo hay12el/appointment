@@ -210,7 +210,13 @@ export default function Calendar(navigation) {
                         previousTitle = 'הקודם'
                         nextTitle="הבא"
                     />
-                    <View style={{height: 80,width:"100%" ,backgroundColor:"white",justifyContent: "center", alignContent: 'center',display: "flex",flexDirection:"column", borderBottomRightRadius: 30,borderBottomLeftRadius: 30,elevation:3,marginTop:0}}>
+                    <View style={{height: 80,width:"100%" ,backgroundColor:"white",justifyContent: "center", alignContent: 'center',display: "flex",flexDirection:"column", borderBottomRightRadius: 30,borderBottomLeftRadius: 30,elevation:3,marginTop:0,shadowColor: "#000",
+                        shadowOffset: {
+                            width: 0,
+                            height: 2,
+                        },
+                        shadowOpacity: 0.25,
+                        shadowRadius: 3.84,}}>
                         <Text style={{textAlign: 'center', fontSize: 30}}>
                             יום {days[selectedDate.getDay()]}
                         </Text>
@@ -220,6 +226,7 @@ export default function Calendar(navigation) {
                     </View>
                     <View style={styles.FLcontainer}>
                         <FlatList 
+                            nestedScrollEnabled
                             horizontal
                             data={hours}
                             renderItem={({item}) => {
@@ -272,6 +279,13 @@ export default function Calendar(navigation) {
 
 const styles = StyleSheet.create({
     FLcontainer: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
         borderRadius:16,
         height:114, 
         width: '97%', 
@@ -304,6 +318,13 @@ const styles = StyleSheet.create({
         justifyContent:'center'
     },
     sectionBox: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
         display: 'flex',
         flexDirection: 'column',
         padding: 20,
