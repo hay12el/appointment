@@ -7,7 +7,8 @@ import { FontAwesome } from '@expo/vector-icons';
 import { UserContext } from '../contexts/userContexts';
 import {API, ADMIN_ID} from '@env';
 import { Overlay } from 'react-native-elements';
-import { ScrollView } from 'react-native-gesture-handler';
+import {LinearGradient} from 'expo-linear-gradient';
+
 
 const days = {  0: "ראשון",
                 1: "שני", 
@@ -112,9 +113,14 @@ export default function Calendar(navigation) {
         
         <View style={{display: 'flex',justifyContent: "center", alignContent: 'center'}}>
             <StatusBar style="dark" />
-            <TouchableOpacity activeOpacity={0.1} onPress={()=> visi()} style={ styles.touchi }>
-                <FontAwesome name="plus" size={32} color="white" />
-            </TouchableOpacity>
+
+           
+                <TouchableOpacity activeOpacity={0.1} onPress={()=> visi()} style={ styles.touchi }>
+                     <LinearGradient colors={['#aca9d1', '#918fb3', '#474659']} style={styles.linearGradient} >
+                        <FontAwesome name="plus" size={32} color="white" />
+                    </LinearGradient>
+                </TouchableOpacity>
+            
 
             <Modal 
                 visible={toApear} 
@@ -219,20 +225,17 @@ export default function Calendar(navigation) {
                         previousTitle = 'הקודם'
                         nextTitle="הבא"
                     />
-                    <View style={{height: 80,width:"100%" ,backgroundColor:"white",justifyContent: "center", alignContent: 'center',display: "flex",flexDirection:"column", borderBottomRightRadius: 30,borderBottomLeftRadius: 30,elevation:3,marginTop:0,shadowColor: "#000",
-                        shadowOffset: {
-                            width: 0,
-                            height: 2,
-                        },
-                        shadowOpacity: 0.25,
-                        shadowRadius: 3.84,}}>
+                    
+                    <LinearGradient colors={['white', 'white', '#ededed']} style={{height: 80,width:"100%" ,backgroundColor:"white",justifyContent: "center", alignContent: 'center',display: "flex",flexDirection:"column", borderBottomRightRadius: 30,borderBottomLeftRadius: 30,marginTop:0}}>
+                        <View></View>
                         <Text style={{textAlign: 'center', fontSize: 30}}>
                             יום {days[selectedDate.getDay()]}
                         </Text>
                         <Text style={{textAlign: 'center', fontSize: 17}}>
                             {selectedDate.getDate()}/{selectedDate.getMonth() + 1}/{selectedDate.getFullYear()}
                         </Text>
-                    </View>
+                    </LinearGradient>
+                    
                     <View style={styles.FLcontainer}>
                         <FlatList 
                             
@@ -275,8 +278,11 @@ export default function Calendar(navigation) {
                             color="#0000ff"
                             animating={thinking}
                             />
+
                 <TouchableOpacity activeOpacity={0.1} onPress={()=> visi(!visible)} style={ styles.touchiArrow}>
-                    <FontAwesome name="arrow-down" size={30} color="white" />
+                    <LinearGradient colors={[ '#ededed','white', 'white']} style={styles.linearGradient1} >
+                        <FontAwesome name="arrow-down" size={30} color="#918fb3" />
+                    </LinearGradient>
                 </TouchableOpacity>
                 </View>
             </Modal>
@@ -286,31 +292,36 @@ export default function Calendar(navigation) {
 }
 
 const styles = StyleSheet.create({
+    linearGradient: {
+        borderRadius:100,
+        height:65,
+        width:65,
+        display: "flex",
+        justifyContent:"center", 
+        alignItems:"center",
+        
+    },
+    linearGradient1: {
+        height:65,
+        width:"100%",
+        borderTopLeftRadius:30,
+        borderTopRightRadius:30,
+        display: "flex",
+        justifyContent:"center", 
+        alignItems:"center",
+        
+    },
     FLcontainer: {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        borderRadius:16,
         height:114, 
-        width: '97%', 
+        width: '100%', 
         borderRadius:5,
-        elevation:10,
         backgroundColor: 'white',
         paddingBottom:1,
         marginTop:15
     },
     touchi: {
-        elevation: 5, 
-        backgroundColor:'#8785A2', 
         position:'relative', 
         top: 30, left: '43%', 
-        height:65,
-        width:65,
-        borderRadius:100,
         alignItems:'center',
         justifyContent:'center'
     },
@@ -318,10 +329,11 @@ const styles = StyleSheet.create({
         elevation: 5, 
         backgroundColor:'#8785A2', 
         position:'absolute', 
-        bottom: 22, left: '43%', 
+        bottom: 0, left: 0, 
         height:65,
-        width:65,
-        borderRadius:100,
+        width:"100%",
+        borderTopLeftRadius:30,
+        borderTopRightRadius:30,
         alignItems:'center',
         justifyContent:'center'
     },
@@ -353,8 +365,8 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
         borderColor: '#0000ff'
   },
   loading: {

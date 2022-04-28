@@ -53,11 +53,13 @@ export default function MyQueues({navigation}) {
                         בשעה {theTime.getUTCHours()}:00 
                     </Text>
                 </View>
-                <View>
-                    <Pressable style={[styles.button, styles.buttonOpen]} onPress={() => showAlert()} >
+                
+                <LinearGradient colors={['#FFE2E2', '#fad4d4', '#e8b7b7']} style={[styles.button, styles.buttonOpen]}>
+                    <Pressable  onPress={() => showAlert()} >
                         <Text style={{fontSize: 14}}>ביטול התור</Text>
                     </Pressable>
-                </View>
+                    
+                </LinearGradient>
             </View>
             )
         }
@@ -112,10 +114,11 @@ export default function MyQueues({navigation}) {
 
     return (
         <StyledContainer >
-            <View style={{height: 180, display: "flex",justifyContent:"center", alignItems:"center",borderBottomLeftRadius:25, borderBottomRightRadius:25 ,backgroundColor:"#FFC7C7"}}>
+
+            <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#fa9393']} style={styles.linearGradient}>
                 <Image source={require('../assets/2.png')} style={{height:80, width:70}}></Image>
                 <Text style={{fontSize:30, color: "#364F6B"}}>התורים שלך:</Text>
-            </View>
+            </LinearGradient>
 
 
             <View style={{height: "67%", borderRadius: 50, position: "relative"}}>
@@ -132,15 +135,18 @@ export default function MyQueues({navigation}) {
             {/* Navigation Bar */}
             <View style={{display: 'flex',justifyContent: 'center', alignContent: 'center', position: "absolute", bottom: 32,right: 0, width: "100%"}}>        
                 <View style={{display: 'flex', alignItems: 'center'}}>
-                    <View style={ styles.menuNavigator }>
+                    <LinearGradient colors={['#FFE2E2', '#fad4d4', '#e8a9a9']} style={styles.menuNavigator}>
 
                         <TouchableOpacity onPress={() => navigation.navigate("Welcome")}>
                             <Ionicons name="home-outline" size={30} color="#364F6B" />
                         </TouchableOpacity>
-
-                        <TouchableOpacity onPress={() => navigation.navigate("MyQueues")} style={{height:50, width:50, backgroundColor:"#ffbaba", borderRadius:100, elevation:5, justifyContent: "center", alignItems: "center"}}>
-                            <MaterialIcons name="playlist-add-check" size={35} color="#364F6B" />
-                        </TouchableOpacity>
+                        
+                        <LinearGradient colors={['#FFE2E2', '#fad4d4', '#f08b8b']} style={{height:50, width:50, elevation:1, borderRadius:100,backgroundColor:"#FFE2E2",  justifyContent: "center", alignItems: "center"}}>
+                            <TouchableOpacity onPress={() => navigation.navigate("MyQueues")}>
+                                <MaterialIcons name="playlist-add-check" size={35} color="#364F6B" />
+                            </TouchableOpacity>
+                        </LinearGradient>
+                        
 
                         {/* Calendar model */}
                         <View style={{position: 'absolute', right: "53%", bottom: 65}}>
@@ -156,7 +162,7 @@ export default function MyQueues({navigation}) {
                             <Entypo name="log-out" size={29} color="#364F6B" />
                         </TouchableOpacity>
 
-                    </View>
+                    </LinearGradient>
                 </View>
             </View>
             {/* Navigation Bar */}
@@ -167,20 +173,12 @@ export default function MyQueues({navigation}) {
 
 const styles = StyleSheet.create({
     linearGradient: {
-        flex: 1,
-        paddingLeft: 15,
-        paddingRight: 15,
-        borderRadius: 5,
-        
-        backgroundColor: "white",
+        height: 180, 
         display: "flex",
-        flexDirection: 'row',
-        justifyContent:'space-around',
-        alignItems: 'center',
-        height:90,
-        marginLeft: 3,
-        marginRight: 3,
-        marginVertical: 2
+        justifyContent:"center", 
+        alignItems:"center",
+        borderBottomLeftRadius:25, 
+        borderBottomRightRadius:25 
     },
     menuNavigator: {
         display: 'flex',
