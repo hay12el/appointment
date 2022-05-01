@@ -115,11 +115,26 @@ export default function Calendar(navigation) {
             <StatusBar style="dark" />
 
            
+
+                
+                {Platform.OS === "android"?  
                 <TouchableOpacity activeOpacity={0.1} onPress={()=> visi()} style={ styles.touchi }>
-                     <LinearGradient colors={['#aca9d1', '#918fb3', '#474659']} style={styles.linearGradient} >
+                     <LinearGradient colors={['#aca9d1', '#9b97c4','#474659']} locations={[0.0, 0.5, 1.0]} style={styles.linearGradient} >
+
                         <FontAwesome name="plus" size={32} color="white" />
                     </LinearGradient>
                 </TouchableOpacity>
+                
+                : 
+                <TouchableOpacity activeOpacity={0.1} onPress={()=> visi()} style={ styles.touchiIOS }>
+                     
+                     <View style={styles.linearGradient}>
+                        <FontAwesome name="plus" size={32} color="white" />
+                     </View>
+                    
+                </TouchableOpacity>}
+                
+                
             
 
             <Modal 
@@ -133,7 +148,7 @@ export default function Calendar(navigation) {
                     <View style={{height: 250,display: "flex", flexDirection:"column", width: 250, borderRadius:15,justifyContent:"center", alignItems:"center", backgroundColor:"#e5e5e8"}}>
                         <Image
                             source={require('../assets/success.gif')}
-                            style={{height: 150,width:150}}
+                            style={{height: 200,width:200}}
                         />
                         <Text style={{fontSize:15}}>התור נקבע בהצלחה!</Text>
                     </View>
@@ -226,11 +241,17 @@ export default function Calendar(navigation) {
                         nextTitle="הבא"
                     />
                     
-                    <LinearGradient colors={['white', 'white', '#ededed']} style={{height: 80,width:"100%" ,backgroundColor:"white",justifyContent: "center", alignContent: 'center',display: "flex",flexDirection:"column", borderBottomRightRadius: 30,borderBottomLeftRadius: 30,marginTop:0}}>
+                    <LinearGradient colors={[ 'white', 'white', '#faf7f7']} locations={[0.0, 0.4, 1.0]} style={{height: 80,width:"100%" ,backgroundColor:"white",justifyContent: "center", alignContent: 'center',display: "flex",flexDirection:"column", borderRadius: 30,marginTop:0}}>
                         <View></View>
                         <Text style={{textAlign: 'center', fontSize: 30}}>
                             יום {days[selectedDate.getDay()]}
                         </Text>
+                        
+
+                    
+
+
+
                         <Text style={{textAlign: 'center', fontSize: 17}}>
                             {selectedDate.getDate()}/{selectedDate.getMonth() + 1}/{selectedDate.getFullYear()}
                         </Text>
@@ -280,7 +301,7 @@ export default function Calendar(navigation) {
                             />
 
                 <TouchableOpacity activeOpacity={0.1} onPress={()=> visi(!visible)} style={ styles.touchiArrow}>
-                    <LinearGradient colors={[ '#ededed','white', 'white']} style={styles.linearGradient1} >
+                    <LinearGradient colors={['#faf7f7', 'white', 'white']} locations={[0.0, 0.3, 1.0]} style={styles.linearGradient1} >
                         <FontAwesome name="arrow-down" size={30} color="#918fb3" />
                     </LinearGradient>
                 </TouchableOpacity>
@@ -292,20 +313,22 @@ export default function Calendar(navigation) {
 }
 
 const styles = StyleSheet.create({
+    
     linearGradient: {
+        elevation:4,
+        margin:0,
+        backgroundColor:"#9b97c4",
         borderRadius:100,
         height:65,
         width:65,
         display: "flex",
         justifyContent:"center", 
-        alignItems:"center",
-        
+        alignItems:"center",  
     },
     linearGradient1: {
         height:65,
         width:"100%",
-        borderTopLeftRadius:30,
-        borderTopRightRadius:30,
+        borderRadius:30,
         display: "flex",
         justifyContent:"center", 
         alignItems:"center",
@@ -320,20 +343,29 @@ const styles = StyleSheet.create({
         marginTop:15
     },
     touchi: {
-        position:'relative', 
-        top: 30, left: '43%', 
+        borderRadius:100,
+        position:'absolute', 
+        backgroundColor:"white",
+        top:-30, left:-40, 
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    touchiIOS: {
+        borderRadius:100,
+        position:'absolute', 
+        backgroundColor:"white",
+        top:-3, left:-42, 
         alignItems:'center',
         justifyContent:'center'
     },
     touchiArrow: {
-        elevation: 5, 
+         
         backgroundColor:'#8785A2', 
         position:'absolute', 
         bottom: 0, left: 0, 
         height:65,
         width:"100%",
-        borderTopLeftRadius:30,
-        borderTopRightRadius:30,
+        borderRadius:30,
         alignItems:'center',
         justifyContent:'center'
     },

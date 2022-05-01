@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import client from "../api/client";
 import React, { useContext } from "react";
 import { Formik } from "formik";
+import {LinearGradient} from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
     StyledContainer,
@@ -23,7 +24,7 @@ import {
     TextLink,
     TextLinkContent
 } from './../components/styles'
-import {View, Text, Button, Image} from 'react-native';
+import {View, Text, Button, Image, StyleSheet} from 'react-native';
 
 const {brand, derLight, primary} = Colors;
 
@@ -61,10 +62,15 @@ const Login = ({navigation}) => {
         <StyledContainer>
             <StatusBar style="dark" />
             <InnerContainer>
-                <View style={{width: "100%", height: 180, display: "flex",justifyContent:"center", alignItems:"center",borderBottomLeftRadius:18, borderBottomRightRadius:18 ,backgroundColor:"#FFC7C7"}}>
+                {Platform.OS === "android"?
+                  <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#fa9393']} locations={[0.0, 0.5, 1.0]} style={styles.linearGradient}>
                     <Image source={require('../assets/11.png')} style={{height:180, width:180}}></Image>
-                    {/* <Text style={{fontSize:30, color: "#364F6B", marginTop: 0}}>נעמה כהן</Text> */}
-                </View>
+                  </LinearGradient>
+                  :
+                  <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#fa9393']} locations={[0.0, 0.5, 1.0]} style={styles.linearGradientIOS}>
+                    <Image source={require('../assets/11.png')} style={{height:180, width:180}}></Image>
+                  </LinearGradient>
+                 }
                 <Formik
                     initialValues={{email: '', password:''}}
                     onSubmit={login}
@@ -135,5 +141,25 @@ const MyTextInput = ({label, icon, isPassword, hidePassword,setHidePassword, ...
         </View>
     )
 };
+
+const styles = StyleSheet.create({
+  linearGradient: {
+        height: 180, 
+        width:"100%",
+        display: "flex",
+        justifyContent:"center", 
+        alignItems:"center",
+        borderBottomRightRadius:25,  
+        borderBottomLeftRadius:25,  
+    },
+    linearGradientIOS: {
+        marginTop: 42,
+        height: 180, 
+        display: "flex",
+        justifyContent:"center", 
+        alignItems:"center",
+        borderRadius:25,  
+    },
+});
 
 export default Login;

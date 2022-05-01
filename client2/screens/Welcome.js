@@ -6,11 +6,9 @@ import Calendar from './newQueue';
 import { Ionicons, Entypo, MaterialIcons, FontAwesome5, AntDesign } from '@expo/vector-icons';
 import {
     StyledContainer,
-    InnerContainer,
-    PageLogo,
-    PageTitle,
+    InnerContainer
 } from './../components/styles'
-import {View, Text, Alert ,Image,TouchableOpacity, StyleSheet, Linking, ScrollView} from 'react-native';
+import {View, Text, Alert ,Image,TouchableOpacity, StyleSheet, Linking, ScrollView,Pressable, Platform} from 'react-native';
 import {UserContext} from '../contexts/userContexts'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FlatList } from "react-native-gesture-handler";
@@ -85,10 +83,16 @@ const Welcome = ({navigation}) => {
       <View style={{height: "100%", flex: 1, backgroundColor: "white", paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0, paddingBottom: 80}}>
 
       <View style={{height: "100%", flex: 1}}>
+              {Platform.OS === "android"?
+                  <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#fa9393']} locations={[0.0, 0.5, 1.0]} style={styles.linearGradient}>
+                    <Image source={require('../assets/11.png')} style={{height:180, width:180}}></Image>
+                  </LinearGradient>
+                  :
+                  <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#fa9393']} locations={[0.0, 0.5, 1.0]} style={styles.linearGradientIOS}>
+                    <Image source={require('../assets/11.png')} style={{height:180, width:180}}></Image>
+                  </LinearGradient>
+              }
               
-              <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#fa9393']} style={styles.linearGradient}>
-                 <Image source={require('../assets/11.png')} style={{height:180, width:180}}></Image>
-              </LinearGradient>
       <ScrollView>
 
         <StyledContainer>
@@ -97,15 +101,18 @@ const Welcome = ({navigation}) => {
             <InnerContainer>
                 {/* <PageLogo resizeMode="cover" source = {require('./../assets/lak.jpeg')}/> */}
                 <View style={{ height: 180, width: '100%'}}>
-                  
-                  <LinearGradient colors={['#FFE2E2', '#fad4d4', '#e8a9a9']} style={{width: "30%", borderTopLeftRadius:15, borderBottomLeftRadius:15, height: 50, alignItems: "center", justifyContent: "center"}}>
+                  {Platform.OS === "android"?
+                  <LinearGradient colors={['#f7e6e6','#f5cece', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderTopLeftRadius: 15, borderBottomLeftRadius: 15,height: 50, alignItems: "center", justifyContent: "center"}}>
                       <Text style={{color: "#364F6B", fontSize: 16}}>על עצמי</Text>
                   </LinearGradient>
+                  :
+                  <LinearGradient colors={['#f7e6e6','#f5cece', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center"}}>
+                      <Text style={{color: "#364F6B", fontSize: 16}}>על עצמי</Text>
+                  </LinearGradient>
+                  }
                   
-                    
-                        
-                    
-                    
+                  
+                  
                   
                   <View style={{margin:10,height: 130,padding: 12, backgroundColor: "white", borderRadius: 12, elevation:16,shadowColor: "#000",
                     shadowOffset: {
@@ -124,9 +131,15 @@ const Welcome = ({navigation}) => {
                 </View>
                 
                 <View style={{ height: 300, width: '100%', marginVertical: 30}}>
-                  <LinearGradient colors={['#FFE2E2', '#fad4d4', '#e8a9a9']} style={{width: "30%", borderTopLeftRadius:15, borderBottomLeftRadius:15, height: 50, alignItems: "center", justifyContent: "center"}}>
+                  {Platform.OS === "android"?
+                  <LinearGradient colors={['#f7e6e6','#f5cece', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderTopLeftRadius: 15, borderBottomLeftRadius: 15,height: 50, alignItems: "center", justifyContent: "center"}}>
                       <Text style={{color: "#364F6B", fontSize: 16}}>העבודות שלי</Text>
                   </LinearGradient>
+                  :
+                  <LinearGradient colors={['#f7e6e6','#f5cece', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center"}}>
+                      <Text style={{color: "#364F6B", fontSize: 16}}>העבודות שלי</Text>
+                  </LinearGradient>
+                  }
                   <View style={{height: 250,margin:10, elevation:17, backgroundColor: "white", borderRadius:10, shadowColor: "#000",shadowOffset: {
                         width: 0,
                         height: 2,
@@ -149,9 +162,15 @@ const Welcome = ({navigation}) => {
             </InnerContainer>
               
             <View style={{justifyContent: "center"}}>
-              <LinearGradient colors={['#FFE2E2', '#fad4d4', '#e8a9a9']} style={{width: "30%", borderTopLeftRadius:15, borderBottomLeftRadius:15, height: 50, alignItems: "center", justifyContent: "center"}}>
-                  <Text style={{color: "#364F6B", fontSize: 16}}>עקבו אחרי</Text>
-              </LinearGradient>
+             {Platform.OS === "android"?
+                  <LinearGradient colors={['#f7e6e6','#f5cece', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderTopLeftRadius: 15, borderBottomLeftRadius: 15,height: 50, alignItems: "center", justifyContent: "center"}}>
+                      <Text style={{color: "#364F6B", fontSize: 16}}>עקבו אחרי</Text>
+                  </LinearGradient>
+                  :
+                  <LinearGradient colors={['#f7e6e6','#f5cece', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center"}}>
+                      <Text style={{color: "#364F6B", fontSize: 16}}>עקבו אחרי</Text>
+                  </LinearGradient>
+                  }
             </View>
             {/* style={{margin:15,height: 130,padding: 12, backgroundColor: "#F6F6F6", borderRadius: 12}} */}
             <View style={{margin:90,height: 70,display: "flex", flexDirection:"row", alignItems: "center", justifyContent: "center",marginBottom: 50, marginTop:30, backgroundColor: "white", borderRadius: 12, elevation:8,shadowColor: "#000",
@@ -187,14 +206,25 @@ const Welcome = ({navigation}) => {
             <View style={{display: 'flex',justifyContent: 'center', alignContent: 'center', position: "absolute", bottom: 32,right: 0, width: "100%"}}>        
                 <View style={{display: 'flex', alignItems: 'center'}}>
                     {/* <View style={ styles.menuNavigator }> */}
-                        <LinearGradient colors={['#FFE2E2', '#fad4d4', '#e8a9a9']} style={styles.menuNavigator}>
+                        <LinearGradient colors={['#FFE2E2', '#fad4d4', '#e8a9a9']} locations={[0,0.5,1]} style={styles.menuNavigator}>
 
-                          
-                        <LinearGradient colors={['#FFE2E2', '#fad4d4', '#f08b8b']} style={{height:50, width:50, elevation:1, borderRadius:100,backgroundColor:"#FFE2E2",  justifyContent: "center", alignItems: "center"}}>
-                          <TouchableOpacity onPress={() => navigation.navigate("Welcome") } style={{}}>
-                              <Ionicons name="home-outline" size={30} color="#364F6B" />
-                          </TouchableOpacity>
-                        </LinearGradient>
+
+                        {Platform.OS === "android"?
+                          <View>
+                            <LinearGradient colors={['#FFE2E2', '#fad4d4', '#f08b8b']} locations={[0.0,0.5,1.0]} style={{height:50, width:50, elevation:1, borderRadius:100,backgroundColor:"#FFE2E2",  justifyContent: "center", alignItems: "center"}}>
+                              
+                            <TouchableOpacity onPress={() => navigation.navigate("Welcome") } style={{}}>
+                                  <Ionicons name="home-outline" size={30} color="#364F6B" />
+                              </TouchableOpacity>
+                            </LinearGradient> 
+                          </View> 
+                        :
+                          <View>
+                            <TouchableOpacity onPress={() => navigation.navigate("Welcome") } style={{}}>
+                                <Ionicons name="home-outline" size={30} color="#364F6B" />
+                            </TouchableOpacity>
+                          </View> 
+                        }
                         
 
                         <TouchableOpacity onPress={() => navigation.navigate("MyQueues")} style={{marginRight:10}}>
@@ -226,13 +256,21 @@ const Welcome = ({navigation}) => {
 
 const styles = StyleSheet.create({
   linearGradient: {
-      marginTop: 42,
+        marginTop: 42,
         height: 180, 
         display: "flex",
         justifyContent:"center", 
         alignItems:"center",
-        borderBottomLeftRadius:25, 
-        borderBottomRightRadius:25 
+        borderBottomRightRadius:25,  
+        borderBottomLeftRadius:25,  
+    },
+    linearGradientIOS: {
+        marginTop: 42,
+        height: 180, 
+        display: "flex",
+        justifyContent:"center", 
+        alignItems:"center",
+        borderRadius:25,  
     },
   menuNavigator: {
     display: 'flex',

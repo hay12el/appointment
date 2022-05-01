@@ -1,14 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { Image, ScrollView , TouchableOpacity, SafeAreaView,StyleSheet , Text, Platform} from "react-native";
-import { Formik, Form, Field } from "formik";
-
+import { Formik} from "formik";
+import {LinearGradient} from 'expo-linear-gradient';
 import {
     StyledContainer,
     InnerContainer,
-    PageLogo,
-    PageTitle,
-    SubTitle,
     StyledFormArea,
     LeftIcon,
     StyledInputLabel,
@@ -98,10 +95,15 @@ const SignUp = ({navigation}) => {
     return (
         <SafeAreaView style={{flex:1,paddingTop: Platform.OS === "android" ? 45 : 0, backgroundColor:"white"}}>
 
-                <View style={{width: "100%", height: 180, display: "flex",justifyContent:"center", alignItems:"center",borderBottomLeftRadius:18, borderBottomRightRadius:18 ,backgroundColor:"#FFC7C7"}}>
+                {Platform.OS === "android"?
+                  <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#fa9393']} locations={[0.0, 0.5, 1.0]} style={styles.linearGradient}>
                     <Image source={require('../assets/11.png')} style={{height:180, width:180}}></Image>
-                    {/* <Text style={{fontSize:30, color: "#364F6B", marginTop: 0}}>נעמה כהן</Text> */}
-                </View>
+                  </LinearGradient>
+                  :
+                  <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#fa9393']} locations={[0.0, 0.5, 1.0]} style={styles.linearGradientIOS}>
+                    <Image source={require('../assets/11.png')} style={{height:180, width:180}}></Image>
+                  </LinearGradient>
+                 }
         <ScrollView>
 
         <StyledContainer style={{paddingTop: 0}}>
@@ -237,7 +239,24 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
         color: 'red'
-    }
+    },
+    linearGradient: {
+        height: 180, 
+        width:"100%",
+        display: "flex",
+        justifyContent:"center", 
+        alignItems:"center",
+        borderBottomRightRadius:25,  
+        borderBottomLeftRadius:25,  
+    },
+    linearGradientIOS: {
+        marginTop: 42,
+        height: 180, 
+        display: "flex",
+        justifyContent:"center", 
+        alignItems:"center",
+        borderRadius:25,  
+    },
 })
 
 const MyTextInput = ({label, icon, isPassword, hidePassword,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Image, StyleSheet, View ,Button, Pressable, FlatList, TouchableOpacity, Linking,Alert, ActivityIndicator, Modal, Text} from 'react-native';
+import { Image, StyleSheet, View ,Button, Pressable, FlatList, TouchableOpacity, Linking,Alert, ActivityIndicator, Modal, Text, Platform} from 'react-native';
 import Calendar from './newQueue';
 import { Entypo, MaterialIcons, FontAwesome5, Ionicons, FontAwesome } from '@expo/vector-icons';
 import client from '../api/client';
@@ -54,12 +54,11 @@ export default function MyQueues({navigation}) {
                     </Text>
                 </View>
                 
-                <LinearGradient colors={['#FFE2E2', '#fad4d4', '#e8b7b7']} style={[styles.button, styles.buttonOpen]}>
-                    <Pressable  onPress={() => showAlert()} >
-                        <Text style={{fontSize: 14}}>ביטול התור</Text>
-                    </Pressable>
-                    
-                </LinearGradient>
+                <Pressable  onPress={() => showAlert()} >
+                    <LinearGradient colors={['#FFE2E2', '#fad4d4', '#e8b7b7']} locations={[0.0, 0.5, 1.0]} style={[styles.button, styles.buttonOpen]}>
+                            <Text style={{fontSize: 14}}>ביטול התור</Text>
+                    </LinearGradient>
+                </Pressable>
             </View>
             )
         }
@@ -114,11 +113,17 @@ export default function MyQueues({navigation}) {
 
     return (
         <StyledContainer >
-
-            <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#fa9393']} style={styles.linearGradient}>
-                <Image source={require('../assets/2.png')} style={{height:80, width:70}}></Image>
-                <Text style={{fontSize:30, color: "#364F6B"}}>התורים שלך:</Text>
-            </LinearGradient>
+            {Platform.OS ==="android"?
+                <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#fa9393']} locations={[0.0, 0.5, 1.0]} style={styles.linearGradient}>
+                    <Image source={require('../assets/2.png')} style={{height:80, width:70}}></Image>
+                    <Text style={{fontSize:30, color: "#364F6B"}}>התורים שלך:</Text>
+                </LinearGradient>
+                :
+                <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#fa9393']} locations={[0.0, 0.5, 1.0]} style={styles.linearGradientIOS}>
+                    <Image source={require('../assets/2.png')} style={{height:80, width:70}}></Image>
+                    <Text style={{fontSize:30, color: "#364F6B"}}>התורים שלך:</Text>
+                </LinearGradient>
+            }
 
 
             <View style={{height: "67%", borderRadius: 50, position: "relative"}}>
@@ -135,17 +140,23 @@ export default function MyQueues({navigation}) {
             {/* Navigation Bar */}
             <View style={{display: 'flex',justifyContent: 'center', alignContent: 'center', position: "absolute", bottom: 32,right: 0, width: "100%"}}>        
                 <View style={{display: 'flex', alignItems: 'center'}}>
-                    <LinearGradient colors={['#FFE2E2', '#fad4d4', '#e8a9a9']} style={styles.menuNavigator}>
+                    <LinearGradient colors={['#FFE2E2', '#fad4d4', '#e8a9a9']} locations={[0,0.5,1]} style={styles.menuNavigator}>
 
                         <TouchableOpacity onPress={() => navigation.navigate("Welcome")}>
                             <Ionicons name="home-outline" size={30} color="#364F6B" />
                         </TouchableOpacity>
                         
+                        {Platform.OS === "android"?
                         <LinearGradient colors={['#FFE2E2', '#fad4d4', '#f08b8b']} style={{height:50, width:50, elevation:1, borderRadius:100,backgroundColor:"#FFE2E2",  justifyContent: "center", alignItems: "center"}}>
                             <TouchableOpacity onPress={() => navigation.navigate("MyQueues")}>
                                 <MaterialIcons name="playlist-add-check" size={35} color="#364F6B" />
                             </TouchableOpacity>
-                        </LinearGradient>
+                        </LinearGradient> 
+                        :
+                        <TouchableOpacity onPress={() => navigation.navigate("MyQueues")}>
+                            <MaterialIcons name="playlist-add-check" size={35} color="#364F6B" />
+                        </TouchableOpacity>
+                        }
                         
 
                         {/* Calendar model */}
@@ -167,18 +178,30 @@ export default function MyQueues({navigation}) {
             </View>
             {/* Navigation Bar */}
 
+             {/* Navigation Bar */}
+            
+            {/* Navigation Bar */}
+    
+
         </StyledContainer>
     )
 }
 
 const styles = StyleSheet.create({
-    linearGradient: {
+    linearGradient: { 
         height: 180, 
         display: "flex",
         justifyContent:"center", 
         alignItems:"center",
-        borderBottomLeftRadius:25, 
-        borderBottomRightRadius:25 
+        borderBottomRightRadius:25,  
+        borderBottomLeftRadius:25,  
+    },
+    linearGradientIOS: {
+        height: 180, 
+        display: "flex",
+        justifyContent:"center", 
+        alignItems:"center",
+        borderRadius:25,  
     },
     menuNavigator: {
         display: 'flex',
