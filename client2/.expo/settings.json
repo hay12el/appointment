@@ -5,6 +5,6 @@
   "minify": false,
   "urlRandomness": "67-y3k",
   "https": false,
-  "scheme": null,
+  "scheme": "exp+client",
   "devClient": false
 }

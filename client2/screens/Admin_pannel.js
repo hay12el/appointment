@@ -69,7 +69,7 @@ export default function Admin_pannel({navigation}) {
 
     useEffect(async () => {
         setThinking(true);
-        await client.post('/events/AdminGetDayQueues', {"date" : selectedDate}, {
+        await client.post('/events/AdminGetDayQueues', {"date" : selectedDate, "user": user.id}, {
             headers: {
                 'Content-Type': 'application/json'
             }

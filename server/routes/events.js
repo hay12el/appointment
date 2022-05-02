@@ -34,40 +34,7 @@ router.post("/getDayQueues", async (req, res) => {
                
 })
 
-///
 
-router.post("/AdminGetDayQueues", async (req, res) => {
-    const Theuser = async(x) => { 
-        return await User.find({_id: x});
-    }
-    var dateObj = new Date(req.body.date);
-    var month = dateObj.getUTCMonth(); //months from 1-12
-    var day = dateObj.getUTCDate();
-    var year = dateObj.getUTCFullYear();
-    var Day = new Date(year, month, day, 00);
-    var nextDay = new Date(year, month, day+1, 00);
-    await Event.find({time: {$gte: Day, 
-                                $lt: nextDay}}).then(async(response) => {
-                                               var s = [];
-                                               
-                                               for (var i = 0; i < response.length; i++) {
-                                                    var temp = {};
-                                                    temp["postId"] = response[i]._id
-                                                    var h = new Date(response[i].time);
-                                                    temp["hour"] = h.getUTCHours();
-                                                    h = (response[i].connectTo).toString();
-                                                    console.log(h);
-                                                    temp["user"] = await Theuser(h);
-                                                    s.push(temp);
-                                               } 
-                                               const hours = response.map(x => new Date(x.time))
-                                               const hoursToReturn = hours.map(x => x.getUTCHours())
-                                               return res.send({"events": s})
-                                           }).catch((err)=>{
-                                               console.log(err);
-                                           })
-               
-})
 
 /////////////////
 
@@ -93,7 +60,7 @@ router.post("/addQueue", async (req, res) => {
             res.send("מינימום שבוע בין שני תורים");
         }else{
             const queue = new Event({
-                admin: req.body.admin,
+                admin: req.body.user.myAdmin,
                 time: time,
                 connectTo: req.body.user.id
             });
@@ -246,6 +213,43 @@ router.post("/AdminCatchQueue", async (req, res) => {
                                                console.log(err);
                                            })
                   
+})
+
+///
+
+router.post("/AdminGetDayQueues", async (req, res) => {
+    const Theuser = async(x) => { 
+        return await User.find({_id: x});
+    }
+    
+    var dateObj = new Date(req.body.date);
+    var month = dateObj.getUTCMonth(); //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+    var Day = new Date(year, month, day, 00);
+    var nextDay = new Date(year, month, day+1, 00);
+    var id = req.body.user;
+    await Event.find({admin: id,time: {$gte: Day, 
+                                $lt: nextDay}}).then(async(response) => {
+                                               var s = [];
+                                               
+                                               for (var i = 0; i < response.length; i++) {
+                                                    var temp = {};
+                                                    temp["postId"] = response[i]._id
+                                                    var h = new Date(response[i].time);
+                                                    temp["hour"] = h.getUTCHours();
+                                                    h = (response[i].connectTo).toString();
+                                                    
+                                                    temp["user"] = await Theuser(h);
+                                                    s.push(temp);
+                                               } 
+                                               const hours = response.map(x => new Date(x.time))
+                                               const hoursToReturn = hours.map(x => x.getUTCHours())
+                                               return res.send({"events": s})
+                                           }).catch((err)=>{
+                                               console.log(err);
+                                           })
+               
 })
 
 ///////////////

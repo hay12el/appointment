@@ -153,8 +153,8 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius:25,  
     },
     linearGradientIOS: {
-        marginTop: 42,
         height: 180, 
+        width:"100%",
         display: "flex",
         justifyContent:"center", 
         alignItems:"center",

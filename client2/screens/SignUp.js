@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { Image, ScrollView , TouchableOpacity, SafeAreaView,StyleSheet , Text, Platform} from "react-native";
+import { Image, ScrollView , TouchableOpacity, SafeAreaView,StyleSheet , Text, Platform, Button, Modal} from "react-native";
 import { Formik} from "formik";
 import {LinearGradient} from 'expo-linear-gradient';
 import {
@@ -21,12 +21,11 @@ import {
     TextLinkContent
 } from '../components/styles'
 import {View} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import client from "../api/client";
 import {UserContext} from "../contexts/userContexts"
 
 const {brand, derLight, primary} = Colors;
-
+import DateTimePicker from '@react-native-community/datetimepicker';
 import {Octicons, Ionicons} from '@expo/vector-icons';
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { useState, useContext } from "react";
@@ -61,7 +60,6 @@ const SignUp = ({navigation}) => {
 
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
-        setShow(false);
         setDate(currentDate);
         console.log(currentDate);
         setDob(currentDate);
@@ -109,20 +107,7 @@ const SignUp = ({navigation}) => {
         <StyledContainer style={{paddingTop: 0}}>
             <StatusBar style="dark" />
             <InnerContainer >
-                {show && (
-                    
-                    <DateTimePicker
-                        locale="es-ES"
-                        style={{width:'100%'}}
-                        testID="dateTimePicker"
-                        value={date}
-                        mode="date"
-                        is24Hour={true}
-                        display="spinner"
-                        onChange={onChange}
-                    />
-                    
-                    )}
+                
                 <Formik
                     initialValues={{name: '',dateOfBirth: Date ,email: '',phone: '', password:'', confirmPassword:''}}
                     validationSchema={validationSchema}
@@ -151,6 +136,62 @@ const SignUp = ({navigation}) => {
                             editable ={false}
                             showDatePicker={showDatePicker}
                             /> 
+                            
+{/* 
+                            <View>
+                                <LeftIcon>
+                                    <Octicons name={"calendar"} size={30} color= {brand} />
+                                </LeftIcon>
+                                <StyledInputLabel>{"תאריך לידה"}</StyledInputLabel>
+                                <TouchableOpacity onPress={() => showDatePicker()}>
+                                        <StyledTextInput {...props} />
+                                </TouchableOpacity>
+                                
+                            </View> */}
+                        
+
+                            {show && Platform.OS === 'android' && (
+                                <DateTimePicker
+                                    locale="es-ES"
+                                    style={{width:'100%'}}
+                                    testID="dateTimePicker"
+                                    value={date}
+                                    mode="date"
+                                    is24Hour={true}
+                                    display="spinner"
+                                    onChange={onChange}
+                                />
+                                )}
+                                {show && Platform.OS === 'ios' && (
+                                    
+                            <Modal
+                                isVisible={show}
+                                animationType="slide"
+                                transparent={true}
+                            >
+                                <View style={styles.centeredView}>
+                                    <View style={styles.modalView}>
+                                        <DateTimePicker
+                                            locale="es-ES"
+                                            style={{width:'100%'}}
+                                            testID="dateTimePicker"
+                                            value={date}
+                                            mode="date"
+                                            is24Hour={true}
+                                            display="spinner"
+                                            onChange={onChange}
+                                        />
+                                        <LinearGradient colors={['#FFE2E2', '#fad4d4', '#e8b7b7']} locations={[0.0, 0.5, 1.0]} style={[styles.button, styles.buttonOpen]}>
+                                            <TouchableOpacity onPress={()=>setShow(false)} >
+                                                <Text>
+                                                    סגור
+                                                </Text>
+                                            </TouchableOpacity>
+                                        </LinearGradient>
+                                    </View>
+                                </View>
+                            </Modal>
+                    )}
                         <MyTextInput 
                             label="כתובת מייל"
                             icon = "mail"
@@ -199,12 +240,12 @@ const SignUp = ({navigation}) => {
                             hidePassword={hidePassword}
                             setHidePassword={setHidePassword}
                         />
-                        
-                        <StyledButton>
-                            <ButtonText onPress={handleSubmit}>
+                        <TouchableOpacity onPress={handleSubmit} style={styles.accept}>
+                            <Text>
                                 הרשמי
-                            </ButtonText>
-                        </StyledButton>
+                            </Text>
+                        </TouchableOpacity>
+                        
                         <Line/>
 
                         <ExtraView>
@@ -215,6 +256,7 @@ const SignUp = ({navigation}) => {
                             <TextLink>
                             </TextLink>
                         </ExtraView>
+                        
 
                         <Text style={styles.error}>{touched.name && errors.name}</Text>
                         <Text style={styles.error}>{touched.phone && errors.phone}</Text>
@@ -229,6 +271,7 @@ const SignUp = ({navigation}) => {
                 </Formik>
             </InnerContainer>
         </StyledContainer>
+        
     </ScrollView>
     </SafeAreaView>
     );
@@ -240,6 +283,17 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: 'red'
     },
+    button: {
+        backgroundColor: '#FFE2E2',
+        borderRadius: 7,
+        padding: 4,
+        width: 140,
+        alignItems:'center',
+        justifyContent: "center",  
+        elevation: 8,
+        marginVertical:24,
+        height: 50,  
+    },
     linearGradient: {
         height: 180, 
         width:"100%",
@@ -250,13 +304,67 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius:25,  
     },
     linearGradientIOS: {
-        marginTop: 42,
         height: 180, 
         display: "flex",
         justifyContent:"center", 
         alignItems:"center",
         borderRadius:25,  
     },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+    },
+    modalView: {
+        width:"80%",
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 15,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+        height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+    },
+    accept:{
+        padding: 15,
+        backgroundColor: '#FFE2E2',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+        marginVertical: 5,
+        height: 60,
+    },
+    ddate:{
+        backgroundColor: '#E5E7EB',
+        padding: 15,
+        paddingLeft: 55,
+        paddingRight: 55,
+        borderRadius: 5,
+        fontSize: 16,
+        height: 60,
+        marginVertical: 3,
+        marginBottom: 10,
+        textAlign: 'center',
+        color: '#1f2937' ,
+        alignItems:'center',
+        justifyContent:'center'
+    }
 })
 
 const MyTextInput = ({label, icon, isPassword, hidePassword,
@@ -267,10 +375,16 @@ const MyTextInput = ({label, icon, isPassword, hidePassword,
                 <Octicons name={icon} size={30} color= {brand} />
             </LeftIcon>
             <StyledInputLabel>{label}</StyledInputLabel>
+            {isDate && 
+                <TouchableOpacity onPress={() => showDatePicker()}>
+                    <View style={styles.ddate}>
+                        <Text style={{color: "#9ca3af", textAlign:'center'}}>
+                            {props.value}
+                        </Text>
+                    </View>
+                </TouchableOpacity>
+            }
             {!isDate && <StyledTextInput {...props} />}
-            {isDate && <TouchableOpacity onPress={() => showDatePicker()}>
-                    <StyledTextInput {...props} />
-                </TouchableOpacity>}
             {isPassword && (
 
                 <RightIcon onPress={()=> setHidePassword(!hidePassword)}>

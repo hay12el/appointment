@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import client from "../api/client";
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import {LinearGradient} from 'expo-linear-gradient';
 import Calendar from './newQueue';
 import { Ionicons, Entypo, MaterialIcons, FontAwesome5, AntDesign } from '@expo/vector-icons';
@@ -8,7 +8,7 @@ import {
     StyledContainer,
     InnerContainer
 } from './../components/styles'
-import {View, Text, Alert ,Image,TouchableOpacity, StyleSheet, Linking, ScrollView,Pressable, Platform} from 'react-native';
+import {View, Text, Alert ,Image,TouchableOpacity, StyleSheet, Linking, ScrollView,Button, Platform} from 'react-native';
 import {UserContext} from '../contexts/userContexts'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FlatList } from "react-native-gesture-handler";

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View ,Button, Pressable, FlatList, TouchableOpacity, Image ,Modal, Text, ActivityIndicator} from 'react-native';
+import { StyleSheet, View ,Button, Pressable, FlatList, TouchableOpacity, Image ,Modal, Text, ActivityIndicator, Platform} from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import client from '../api/client';
 import { FontAwesome } from '@expo/vector-icons';
@@ -49,6 +49,7 @@ export default function Calendar(navigation) {
 
     const addQueue = async () => {
         setThinking(true);
+        console.log(user);
         await client.post('/events/addQueue', {'user': user, 'time': selectedDate, 'hour': choousenHour, 'admin': ADMIN_ID} , {
             headers: {
                 'Content-Type': 'application/json'
@@ -299,12 +300,20 @@ export default function Calendar(navigation) {
                             color="#0000ff"
                             animating={thinking}
                             />
-
+                {Platform.OS === "android"?
                 <TouchableOpacity activeOpacity={0.1} onPress={()=> visi(!visible)} style={ styles.touchiArrow}>
-                    <LinearGradient colors={['#faf7f7', 'white', 'white']} locations={[0.0, 0.3, 1.0]} style={styles.linearGradient1} >
+                    <LinearGradient colors={['#f0eded', '#fafafa', 'white']} locations={[0.0, 0.3, 1.0]} style={styles.linearGradient1} >
                         <FontAwesome name="arrow-down" size={30} color="#918fb3" />
                     </LinearGradient>
                 </TouchableOpacity>
+                :
+                <TouchableOpacity activeOpacity={0.1} onPress={()=> visi(!visible)} style={ styles.touchiArrowIOS}>
+                    <LinearGradient colors={['#e6e6e6', 'white', 'white']} locations={[0.0, 0.3, 1.0]} style={styles.linearGradient1} >
+                        <FontAwesome name="arrow-down" size={30} color="#918fb3" />
+                    </LinearGradient>
+                </TouchableOpacity>
+                
+                }
                 </View>
             </Modal>
         </View>
@@ -359,6 +368,17 @@ const styles = StyleSheet.create({
         justifyContent:'center'
     },
     touchiArrow: {
+         
+        position:'absolute', 
+        bottom: 0, left: 0, 
+        height:65,
+        width:"100%",
+        borderTopRightRadius:30,
+        borderTopLeftRadius:30,
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    touchiArrowIOS: {
          
         backgroundColor:'#8785A2', 
         position:'absolute', 

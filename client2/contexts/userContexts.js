@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const UserContext = createContext({
         isAuthenticated: false,
+        myAdmin: '626132acee9af2167833d3fc',
         isAdmin: false,
         id: '',
         userName: '',
@@ -16,6 +17,7 @@ export const UserProvider = ({ children }) => {
     const [user, setUser] = useState({ 
         isAuthenticated: false,
         isAdmin: false,
+        myAdmin: '626132acee9af2167833d3fc',
         id:'',
         userName: '',
         email: '',
@@ -28,6 +30,7 @@ export const UserProvider = ({ children }) => {
         setUser((user) => ({
             id: id,
             userName: name,
+            myAdmin: '626132acee9af2167833d3fc',
             isAuthenticated: true,
             isAdmin: isAdmin,
             email: email,
