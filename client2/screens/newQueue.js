@@ -100,7 +100,7 @@ export default function Calendar(navigation) {
         setSuccess(true);
         setTimeout(() => {
             setSuccess(false);
-        }, 3300)
+        }, 4200)
     };
 
     const ErrortoggleOverlay = () => {
@@ -187,17 +187,19 @@ export default function Calendar(navigation) {
                             <View style={styles.buttons}>
 
                                     <Pressable
-                                        style={[styles.button, styles.buttonOpen]}
                                         onPress={() => setMassage(!massage)}
-                                        >
-                                        <Text style={styles.textStyle}>ביטול</Text>
+                                    >
+                                        <LinearGradient colors={['#FFE2E2', '#fad4d4', '#e8b7b7']} locations={[0.0, 0.5, 1.0]} style={[styles.button, styles.buttonOpen]}>
+                                            <Text style={styles.textStyle}>ביטול</Text>
+                                        </LinearGradient>
                                     </Pressable>
                                         
                                     <Pressable
-                                        style={[styles.button, styles.buttonOpen]}
                                         onPress={() => addQueue()}
                                         >
-                                        <Text style={styles.textStyle}>כן אני אשמח :)</Text>
+                                        <LinearGradient colors={['#FFE2E2', '#fad4d4', '#e8b7b7']} locations={[0.0, 0.5, 1.0]} style={[styles.button, styles.buttonOpen]}>
+                                            <Text style={styles.textStyle}>כן אני אשמח :)</Text>
+                                        </LinearGradient>
                                     </Pressable>
                                     
                             </View>
@@ -249,11 +251,6 @@ export default function Calendar(navigation) {
                         <Text style={{textAlign: 'center', fontSize: 30}}>
                             יום {days[selectedDate.getDay()]}
                         </Text>
-                        
-
-                    
-
-
 
                         <Text style={{textAlign: 'center', fontSize: 17}}>
                             {selectedDate.getDate()}/{selectedDate.getMonth() + 1}/{selectedDate.getFullYear()}
@@ -281,13 +278,11 @@ export default function Calendar(navigation) {
                                         item.color = 'white';
                                         item.iscatched= false;
                                         return  <TouchableOpacity onPress={() => {if(item.iscatched){console.log("catched " + item.hour)}else{setChoosenHour(item.hour); setMassage(!massage)}}}>
-                                        
-                                                
-                                                <View style={[ styles.sectionBox, {backgroundColor: 'white'}] }>
-                                                    <FontAwesome name="calendar" size={27} color="#8785A2" />
-                                                    <Text style={{textAlign: 'right', fontSize: 19}}> {item.hour}:00</Text>
-                                                </View>
-                                            </TouchableOpacity>
+                                                    <View style={[ styles.sectionBox, {backgroundColor: 'white'}] }>
+                                                        <FontAwesome name="calendar" size={27} color="#8785A2" />
+                                                        <Text style={{textAlign: 'right', fontSize: 19}}> {item.hour}:00</Text>
+                                                    </View>
+                                                </TouchableOpacity>
                                     }
                                     
                             }}
@@ -296,12 +291,16 @@ export default function Calendar(navigation) {
                     </View>
                         </ScrollView>
                 </View>
+
+
                         <ActivityIndicator
                             style={styles.loading}
                             size="large" 
                             color="#0000ff"
                             animating={thinking}
                             />
+
+
                 {Platform.OS === "android"?
                 <TouchableOpacity activeOpacity={0.1} onPress={()=> visi(!visible)} style={ styles.touchiArrow}>
                     <LinearGradient colors={['#f0eded', '#fafafa', 'white']} locations={[0.0, 0.3, 1.0]} style={styles.linearGradient1} >
@@ -463,7 +462,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.58,
         shadowRadius: 16.00,
-        marginTop: '50%',  
+        marginTop: '80%',  
         marginLeft: 40,  
    },  
    text: {  

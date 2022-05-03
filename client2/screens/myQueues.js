@@ -45,11 +45,11 @@ export default function MyQueues({navigation}) {
                     <FontAwesome name="calendar" size={27} color="black" />
                 </View>
                 <View style={{ marginTop: 30,display: 'flex', flexDirection: 'row', alignContent: 'flex-start',justifyContent:"center"}}>
-                    <Text style={{textAlign: 'right',fontSize: 15}}>
+                    <Text style={{textAlign: 'right',fontSize: 16}}>
                         יום {days[theTime.getDay()]} {theTime.getDate()}/{theTime.getMonth() + 1} 
                     </Text>
                     <Text> </Text>
-                    <Text style={{textAlign: 'right',fontSize: 15}}>
+                    <Text style={{textAlign: 'right',fontSize: 16}}>
                         בשעה {theTime.getUTCHours()}:00 
                     </Text>
                 </View>

@@ -17,28 +17,28 @@ const SECTIONS =
     [
       {
         key: '1',
-        text: 'Item text 1',
+        text: 'פאני באני',
         uri: 'https://www.lady-nails.co.il/wp-content/uploads/2020/06/%D7%9C%D7%A7-%D7%92%D7%9C-12.jpg',
       },
       {
         key: '2',
-        text: 'Item text 2',
+        text: 'סגול מטאלי',
         uri: 'https://www.lady-nails.co.il/wp-content/uploads/2020/11/nails5.jpg',
       },
 
       {
         key: '3',
-        text: 'Item text 3',
+        text: 'לבן פנינה',
         uri: 'https://biosculpture.co.il/wp-content/uploads/2021/03/%D7%9E%D7%95%D7%A1%D7%9C%D7%9E%D7%99%D7%95%D7%AA-%D7%9C%D7%A7-%D7%92%D7%9C.jpg',
       },
       {
         key: '4',
-        text: 'Item text 4',
+        text: 'תכלת אפרפר',
         uri: 'https://www.lady-nails.co.il/wp-content/uploads/2020/11/nails2.jpg',
       },
       {
         key: '5',
-        text: 'Item text 5',
+        text: 'משולב',
         uri: 'https://www.lady-nails.co.il/wp-content/uploads/2020/11/nails6.jpg',
       },
     ];
@@ -54,8 +54,9 @@ const ListItem = ({ item }) => {
         resizeMode="cover"
       />
       {/* <Text style={styles.itemText}>{item.text}</Text> */}
-      <View style={{borderRadius:100, backgroundColor:'white', position:'absolute',bottom:-6,right:'37%',height:48,width:48,borderWidth:1, elevation:4}}>
-        <Image source={require('../assets/3.png')} style={{height:"100%",width:"100%",borderRadius:100}}></Image>
+      <View style={{justifyContent:"center", borderBottomLeftRadius:10,borderBottomRightRadius:10, backgroundColor:'white',height:40,width:'100%', elevation:4}}>
+       
+        <Text style={{textAlign:'center',fontWeight: 'bold',color: "#364F6B"}}>{item.text}</Text>
       </View>
     </View>
   );
@@ -117,13 +118,14 @@ const Welcome = ({navigation}) => {
                   
                   
                   
-                  <View style={{width:'95%' ,margin:10,marginTop:0,height: 130,padding: 12, backgroundColor: "white",borderBottomLeftRadius:10,borderBottomRightRadius:10, elevation:16,shadowColor: "#000",
-                    shadowOffset: {
-                      width: 0,
-                      height: 2,
-                    },
-                    shadowOpacity: 0.25,
-                    shadowRadius: 3.84,}}>
+                  <View style={{width:'95%' ,margin:10,marginTop:0,height: 130,padding: 12, backgroundColor: "white",borderBottomLeftRadius:10,
+                                borderBottomRightRadius:10, elevation:6,shadowColor: "#000",
+                                shadowOffset: {
+                                  width: 0,
+                                  height: 2,
+                                },
+                                shadowOpacity: 0.25,
+                                shadowRadius: 3.84,}}>
                     <Text style={{color: "#364F6B", fontSize: 16, textAlign: "center"}}>נעים להכיר :) </Text>
                     <Text style={{color: "#364F6B", fontSize: 16, textAlign: "center"}}>
 אני עושה לק ג'ל עם מניקור בתשומת לב מירבית - אשמח לקבל אתכן ולעזור לשמור על הציפורניים שלכן יפות ומטופחות לאורך זמן.</Text>
@@ -133,7 +135,7 @@ const Welcome = ({navigation}) => {
                     
                 </View>
                 
-                <View style={{ height: 300, width: '100%', marginVertical: 30,justifyContent:'center', alignItems:'center'}}>
+                <View style={{ height: 300, width: '100%', marginVertical: 30,justifyContent:'center', alignItems:'center', marginVertical:70}}>
                   {Platform.OS === "android"?
                   <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "95%", borderTopLeftRadius: 15,borderTopRightRadius: 15, height: 50, alignItems: "center", justifyContent: "center", elevation:4}}>
                       <Text style={{color: "#364F6B", fontSize: 16, fontWeight: 'bold'}}>העבודות שלי</Text>
@@ -144,12 +146,14 @@ const Welcome = ({navigation}) => {
                   </LinearGradient>
                   }
                   
-                  <View style={{height: 270,margin:10, marginTop: 0,elevation:17, backgroundColor: "white", borderBottomLeftRadius:10,borderBottomRightRadius:10, shadowColor: "#000",shadowOffset: {
-                        width: 0,
-                        height: 2,
-                      },
-                      shadowOpacity: 0.25,
-                      shadowRadius: 3.84,}}>
+                  <View style={{height: 290,margin:10, marginTop: 0,elevation:6, backgroundColor: "white", 
+                                borderBottomLeftRadius:10,borderBottomRightRadius:10, shadowColor: "#000",
+                                shadowOffset: {
+                                  width: 0,
+                                  height: 2,
+                                },
+                                shadowOpacity: 0.25,
+                                shadowRadius: 3.84,}}>
                     <FlatList
                       data={SECTIONS}
                       renderItem={({ item }) => <ListItem item={item} />}
@@ -303,6 +307,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   item: {
+    
     margin: 10,
   },
   itemPhoto: {
