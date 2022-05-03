@@ -53,7 +53,10 @@ const ListItem = ({ item }) => {
         style={styles.itemPhoto}
         resizeMode="cover"
       />
-      <Text style={styles.itemText}>{item.text}</Text>
+      {/* <Text style={styles.itemText}>{item.text}</Text> */}
+      <View style={{borderRadius:100, backgroundColor:'white', position:'absolute',bottom:-6,right:'37%',height:48,width:48,borderWidth:1, elevation:4}}>
+        <Image source={require('../assets/3.png')} style={{height:"100%",width:"100%",borderRadius:100}}></Image>
+      </View>
     </View>
   );
 };
@@ -100,21 +103,21 @@ const Welcome = ({navigation}) => {
             
             <InnerContainer>
                 {/* <PageLogo resizeMode="cover" source = {require('./../assets/lak.jpeg')}/> */}
-                <View style={{ height: 180, width: '100%'}}>
+                <View style={{ height: 180, width: '100%', justifyContent:'center', alignItems:'center'}}>
                   {Platform.OS === "android"?
-                  <LinearGradient colors={['#f7e6e6','#f5cece', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderTopLeftRadius: 15, borderBottomLeftRadius: 15,height: 50, alignItems: "center", justifyContent: "center"}}>
-                      <Text style={{color: "#364F6B", fontSize: 16}}>על עצמי</Text>
+                  <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "95%", borderTopLeftRadius: 15,borderTopRightRadius: 15, height: 50, alignItems: "center", justifyContent: "center", elevation:4}}>
+                      <Text style={{color: "#364F6B", fontSize: 16, fontWeight: 'bold'}}>על עצמי</Text>
                   </LinearGradient>
                   :
-                  <LinearGradient colors={['#f7e6e6','#f5cece', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center"}}>
-                      <Text style={{color: "#364F6B", fontSize: 16}}>על עצמי</Text>
+                  <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center"}}>
+                      <Text style={{color: "#364F6B", fontSize: 16,fontWeight: 'bold'}}>על עצמי</Text>
                   </LinearGradient>
                   }
                   
                   
                   
                   
-                  <View style={{margin:10,height: 130,padding: 12, backgroundColor: "white", borderRadius: 12, elevation:16,shadowColor: "#000",
+                  <View style={{width:'95%' ,margin:10,marginTop:0,height: 130,padding: 12, backgroundColor: "white",borderBottomLeftRadius:10,borderBottomRightRadius:10, elevation:16,shadowColor: "#000",
                     shadowOffset: {
                       width: 0,
                       height: 2,
@@ -130,17 +133,18 @@ const Welcome = ({navigation}) => {
                     
                 </View>
                 
-                <View style={{ height: 300, width: '100%', marginVertical: 30}}>
+                <View style={{ height: 300, width: '100%', marginVertical: 30,justifyContent:'center', alignItems:'center'}}>
                   {Platform.OS === "android"?
-                  <LinearGradient colors={['#f7e6e6','#f5cece', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderTopLeftRadius: 15, borderBottomLeftRadius: 15,height: 50, alignItems: "center", justifyContent: "center"}}>
-                      <Text style={{color: "#364F6B", fontSize: 16}}>העבודות שלי</Text>
+                  <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "95%", borderTopLeftRadius: 15,borderTopRightRadius: 15, height: 50, alignItems: "center", justifyContent: "center", elevation:4}}>
+                      <Text style={{color: "#364F6B", fontSize: 16, fontWeight: 'bold'}}>העבודות שלי</Text>
                   </LinearGradient>
                   :
-                  <LinearGradient colors={['#f7e6e6','#f5cece', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center"}}>
-                      <Text style={{color: "#364F6B", fontSize: 16}}>העבודות שלי</Text>
+                  <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center"}}>
+                      <Text style={{color: "#364F6B", fontSize: 16, fontWeight: 'bold'}}>העבודות שלי</Text>
                   </LinearGradient>
                   }
-                  <View style={{height: 250,margin:10, elevation:17, backgroundColor: "white", borderRadius:10, shadowColor: "#000",shadowOffset: {
+                  
+                  <View style={{height: 270,margin:10, marginTop: 0,elevation:17, backgroundColor: "white", borderBottomLeftRadius:10,borderBottomRightRadius:10, shadowColor: "#000",shadowOffset: {
                         width: 0,
                         height: 2,
                       },
@@ -163,12 +167,12 @@ const Welcome = ({navigation}) => {
               
             <View style={{justifyContent: "center"}}>
              {Platform.OS === "android"?
-                  <LinearGradient colors={['#f7e6e6','#f5cece', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderTopLeftRadius: 15, borderBottomLeftRadius: 15,height: 50, alignItems: "center", justifyContent: "center"}}>
-                      <Text style={{color: "#364F6B", fontSize: 16}}>עקבו אחרי</Text>
+                  <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderTopLeftRadius: 15, borderBottomLeftRadius: 15,height: 50, alignItems: "center", justifyContent: "center"}}>
+                      <Text style={{color: "#364F6B", fontSize: 16,fontWeight: 'bold'}}>עקבו אחרי</Text>
                   </LinearGradient>
                   :
-                  <LinearGradient colors={['#f7e6e6','#f5cece', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center"}}>
-                      <Text style={{color: "#364F6B", fontSize: 16}}>עקבו אחרי</Text>
+                  <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center"}}>
+                      <Text style={{color: "#364F6B", fontSize: 16, fontWeight: 'bold'}}>עקבו אחרי</Text>
                   </LinearGradient>
                   }
             </View>

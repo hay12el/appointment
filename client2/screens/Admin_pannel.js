@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View ,Button, Pressable, FlatList, TouchableOpacity, Linking, Image ,Modal, Text, ActivityIndicator, Alert} from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import client from '../api/client';
@@ -234,7 +235,7 @@ export default function Admin_pannel({navigation}) {
 
     return (
         <View style={{display: 'flex',justifyContent: 'center', alignContent: 'center', height: "100%"}}>
-                
+                <StatusBar style="dark" />
                 <Overlay isVisible={Success} onBackdropPress={toggleOverlay}>
                     <View style={{height: 250,display: "flex", flexDirection:"column", width: 250, borderRadius:15,justifyContent:"center", alignItems:"center", backgroundColor:"#e5e5e8"}}>
                         <Image
@@ -314,7 +315,6 @@ export default function Admin_pannel({navigation}) {
                     />
                     <View style={styles.FLcontainer}>
                         <FlatList 
-                            
                             data={hours}
                             renderItem={({item}) => {
                                 //check if hour is catched
@@ -354,7 +354,7 @@ export default function Admin_pannel({navigation}) {
 
                     </View>
                 </View>
-                <View style={{display: 'flex',justifyContent: 'center', alignContent: 'center', position: "relative", width: "100%",backgroundColor:"white"}}>        
+                <View style={{display: 'flex',justifyContent: 'center', alignContent: 'center',  width: "100%"}}>        
                     <View style={{display: 'flex', alignItems: 'center',marginBottom:25}}>
                         <View style={ styles.menuNavigator }>
     
@@ -402,10 +402,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: 22
     },
     FLcontainer: {
-        paddingBottom:"10%",
-        height:'45%', 
-        width: '97%', 
-        borderRadius:5,
+        flex:1,
+        marginBottom:3,
+        elevation:4, 
+        backgroundColor:'white',
+        width: '99%', 
+        borderRadius:20,
+        borderWidth:4,
+        borderColor:"#FFC7C7"
     },
     button: {
         shadowColor: "#000",
@@ -450,7 +454,7 @@ const styles = StyleSheet.create({
         marginVertical: 2
     },
   container: {
-        paddingTop: 0,
+        paddingTop: 30,
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',

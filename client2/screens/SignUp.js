@@ -61,6 +61,7 @@ const SignUp = ({navigation}) => {
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setDate(currentDate);
+        if(Platform.OS === 'android') setShow(false);
         console.log(currentDate);
         setDob(currentDate);
     }
@@ -152,7 +153,7 @@ const SignUp = ({navigation}) => {
 
                             {show && Platform.OS === 'android' && (
                                 <DateTimePicker
-                                    locale="es-ES"
+                                    locale="he-HE"
                                     style={{width:'100%'}}
                                     testID="dateTimePicker"
                                     value={date}
@@ -164,15 +165,15 @@ const SignUp = ({navigation}) => {
                                 )}
                                 {show && Platform.OS === 'ios' && (
                                     
-                            <Modal
-                                isVisible={show}
-                                animationType="slide"
-                                transparent={true}
-                            >
+                            // <Modal
+                            //     isVisible={show}
+                            //     animationType="fade"
+                            //     transparent={true}
+                            // >
                                 <View style={styles.centeredView}>
                                     <View style={styles.modalView}>
                                         <DateTimePicker
-                                            locale="es-ES"
+                                            locale="he-HE"
                                             style={{width:'100%'}}
                                             testID="dateTimePicker"
                                             value={date}
@@ -190,7 +191,7 @@ const SignUp = ({navigation}) => {
                                         </LinearGradient>
                                     </View>
                                 </View>
-                            </Modal>
+                            //  </Modal>
                     )}
                         <MyTextInput 
                             label="כתובת מייל"

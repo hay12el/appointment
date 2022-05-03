@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View ,Button, Pressable, FlatList, TouchableOpacity, Image ,Modal, Text, ActivityIndicator, Platform} from 'react-native';
+import { StyleSheet, View ,ScrollView, Pressable, FlatList, TouchableOpacity, Image ,Modal, Text, ActivityIndicator, Platform} from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import client from '../api/client';
 import { FontAwesome } from '@expo/vector-icons';
@@ -205,6 +205,8 @@ export default function Calendar(navigation) {
                     </Modal>  
                     
 
+                    <ScrollView>
+
                     
                     <CalendarPicker
                         startFromMonday={false}
@@ -292,7 +294,7 @@ export default function Calendar(navigation) {
                             
                         />
                     </View>
-                        
+                        </ScrollView>
                 </View>
                         <ActivityIndicator
                             style={styles.loading}
@@ -344,12 +346,13 @@ const styles = StyleSheet.create({
         
     },
     FLcontainer: {
-        height:114, 
+        
         width: '100%', 
         borderRadius:5,
         backgroundColor: 'white',
         paddingBottom:1,
-        marginTop:15
+        marginTop:15,
+        
     },
     touchi: {
         borderRadius:100,

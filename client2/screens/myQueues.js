@@ -127,11 +127,21 @@ export default function MyQueues({navigation}) {
 
 
             <View style={{height: "67%", borderRadius: 50, position: "relative"}}>
+                {Object.keys(queues).length === 0?
+                <View style={{marginTop:"50%"}}>
+                    <Text style={{textAlign:'center', fontSize:40}}>
+                       אין תורים עתידיים
+                    </Text>
+                </View>
+
+                :
+
                 <FlatList
                     data={queues}
                     renderItem={({ item }) => <Queue item={item} />}
                     keyExtractor={item => item._id}              
                 />
+                }
             </View>
             
 
