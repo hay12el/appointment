@@ -1,6 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import client from "../api/client";
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import {LinearGradient} from 'expo-linear-gradient';
 import Calendar from './newQueue';
 import { Ionicons, Entypo, MaterialIcons, FontAwesome5, AntDesign } from '@expo/vector-icons';
@@ -54,7 +53,13 @@ const ListItem = ({ item }) => {
         resizeMode="cover"
       />
       {/* <Text style={styles.itemText}>{item.text}</Text> */}
-      <View style={{justifyContent:"center", borderBottomLeftRadius:10,borderBottomRightRadius:10, backgroundColor:'white',height:40,width:'100%', elevation:4}}>
+      <View style={{justifyContent:"center", borderBottomLeftRadius:10,borderBottomRightRadius:10, backgroundColor:'white',height:40,width:'100%', elevation:4,shadowColor: "black",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 6.00,}}>
        
         <Text style={{textAlign:'center',fontWeight: 'bold',color: "#364F6B"}}>{item.text}</Text>
       </View>
@@ -110,7 +115,7 @@ const Welcome = ({navigation}) => {
                       <Text style={{color: "#364F6B", fontSize: 16, fontWeight: 'bold'}}>על עצמי</Text>
                   </LinearGradient>
                   :
-                  <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center"}}>
+                  <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "95%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center"}}>
                       <Text style={{color: "#364F6B", fontSize: 16,fontWeight: 'bold'}}>על עצמי</Text>
                   </LinearGradient>
                   }
@@ -141,12 +146,12 @@ const Welcome = ({navigation}) => {
                       <Text style={{color: "#364F6B", fontSize: 16, fontWeight: 'bold'}}>העבודות שלי</Text>
                   </LinearGradient>
                   :
-                  <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center"}}>
+                  <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "95%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center"}}>
                       <Text style={{color: "#364F6B", fontSize: 16, fontWeight: 'bold'}}>העבודות שלי</Text>
                   </LinearGradient>
                   }
                   
-                  <View style={{height: 290,margin:10, marginTop: 0,elevation:6, backgroundColor: "white", 
+                  <View style={{height: 290,width: "95%", marginTop: 0,elevation:6, backgroundColor: "white", 
                                 borderBottomLeftRadius:10,borderBottomRightRadius:10, shadowColor: "#000",
                                 shadowOffset: {
                                   width: 0,

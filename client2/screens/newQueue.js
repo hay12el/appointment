@@ -257,9 +257,8 @@ export default function Calendar(navigation) {
                         </Text>
                     </LinearGradient>
                     
-                    <View style={styles.FLcontainer}>
-                        <FlatList 
-                            
+                    <View style={styles.FLcontainer}> 
+                        <FlatList  
                             horizontal
                             data={hours}
                             renderItem={({item}) => {
