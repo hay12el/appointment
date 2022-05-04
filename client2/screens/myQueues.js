@@ -55,7 +55,7 @@ export default function MyQueues({navigation}) {
                 </View>
                 
                 <Pressable  onPress={() => showAlert()} >
-                    <LinearGradient colors={['#FFE2E2', '#fad4d4', '#e8b7b7']} locations={[0.0, 0.5, 1.0]} style={[styles.button, styles.buttonOpen]}>
+                    <LinearGradient colors={['#FFE2E2', '#fad4d4', '#e8b7b7']} locations={[0.0, 0.5, 1.0]} style={[styles.button]}>
                             <Text style={{fontSize: 14}}>ביטול התור</Text>
                     </LinearGradient>
                 </Pressable>
@@ -249,6 +249,10 @@ const styles = StyleSheet.create({
         width: 140,
         alignItems:'center',
         justifyContent: "center",  
+        shadowColor: '#000',
+        shadowOffset: { width: 2, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 6,
         elevation: 8,
         marginVertical:24,
         height: 30,

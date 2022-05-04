@@ -345,16 +345,11 @@ export default function Admin_pannel({navigation}) {
                             }}
                             
                         />
-                        
-                        
-                        
-                            
-
 
 
                     </View>
                 </View>
-                <View style={{display: 'flex',justifyContent: 'center', alignContent: 'center',  width: "100%"}}>        
+                <View style={{backgroundColor:'white', display: 'flex',justifyContent: 'center', alignContent: 'center',  width: "100%"}}>        
                     <View style={{display: 'flex', alignItems: 'center',marginBottom:25}}>
                         <View style={ styles.menuNavigator }>
     

@@ -344,7 +344,7 @@ const styles = StyleSheet.create({
         
     },
     FLcontainer: {
-        
+        flex:1,
         width: '100%', 
         borderRadius:5,
         backgroundColor: 'white',

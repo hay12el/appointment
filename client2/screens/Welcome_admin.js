@@ -19,28 +19,28 @@ const SECTIONS =
     [
       {
         key: '1',
-        text: 'Item text 1',
+        text: 'פאני באני',
         uri: 'https://www.lady-nails.co.il/wp-content/uploads/2020/06/%D7%9C%D7%A7-%D7%92%D7%9C-12.jpg',
       },
       {
         key: '2',
-        text: 'Item text 2',
+        text: 'סגול מטאלי',
         uri: 'https://www.lady-nails.co.il/wp-content/uploads/2020/11/nails5.jpg',
       },
 
       {
         key: '3',
-        text: 'Item text 3',
+        text: 'לבן פנינה',
         uri: 'https://biosculpture.co.il/wp-content/uploads/2021/03/%D7%9E%D7%95%D7%A1%D7%9C%D7%9E%D7%99%D7%95%D7%AA-%D7%9C%D7%A7-%D7%92%D7%9C.jpg',
       },
       {
         key: '4',
-        text: 'Item text 4',
+        text: 'תכלת אפרפר',
         uri: 'https://www.lady-nails.co.il/wp-content/uploads/2020/11/nails2.jpg',
       },
       {
         key: '5',
-        text: 'Item text 5',
+        text: 'משולב',
         uri: 'https://www.lady-nails.co.il/wp-content/uploads/2020/11/nails6.jpg',
       },
     ];
@@ -55,7 +55,17 @@ const ListItem = ({ item }) => {
         style={styles.itemPhoto}
         resizeMode="cover"
       />
-      <Text style={styles.itemText}>{item.text}</Text>
+      {/* <Text style={styles.itemText}>{item.text}</Text> */}
+      <View style={{justifyContent:"center", borderBottomLeftRadius:10,borderBottomRightRadius:10, backgroundColor:'white',height:40,width:'100%', elevation:4,shadowColor: "black",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 6.00,}}>
+       
+        <Text style={{textAlign:'center',fontWeight: 'bold',color: "#364F6B"}}>{item.text}</Text>
+      </View>
     </View>
   );
 };
@@ -63,7 +73,7 @@ const ListItem = ({ item }) => {
 const Welcome_admin = ({navigation}) => {
       const {user, Logout} = useContext(UserContext);
 
-      const logout = async () => {
+       const logout = async () => {
           try {
               await AsyncStorage.removeItem('token');
               Logout();
@@ -82,7 +92,6 @@ const Welcome_admin = ({navigation}) => {
 
     
     return (
-     
       <View style={{height: "100%", flex: 1, backgroundColor: "white", paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0, paddingBottom: 80}}>
 
       <View style={{height: "100%", flex: 1}}>
@@ -103,27 +112,28 @@ const Welcome_admin = ({navigation}) => {
             
             <InnerContainer>
                 {/* <PageLogo resizeMode="cover" source = {require('./../assets/lak.jpeg')}/> */}
-                <View style={{ height: 180, width: '100%'}}>
+                <View style={{ height: 180, width: '100%', justifyContent:'center', alignItems:'center'}}>
                   {Platform.OS === "android"?
-                  <LinearGradient colors={['#f7e6e6','#f5cece', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderTopLeftRadius: 15, borderBottomLeftRadius: 15,height: 50, alignItems: "center", justifyContent: "center"}}>
-                      <Text style={{color: "#364F6B", fontSize: 16}}>על עצמי</Text>
+                  <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "95%", borderTopLeftRadius: 15,borderTopRightRadius: 15, height: 50, alignItems: "center", justifyContent: "center", elevation:4}}>
+                      <Text style={{color: "#364F6B", fontSize: 16, fontWeight: 'bold'}}>על עצמי</Text>
                   </LinearGradient>
                   :
-                  <LinearGradient colors={['#f7e6e6','#f5cece', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center"}}>
-                      <Text style={{color: "#364F6B", fontSize: 16}}>על עצמי</Text>
+                  <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "95%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center",}}>
+                      <Text style={{color: "#364F6B", fontSize: 16,fontWeight: 'bold'}}>על עצמי</Text>
                   </LinearGradient>
                   }
                   
                   
                   
                   
-                  <View style={{margin:10,height: 130,padding: 12, backgroundColor: "white", borderRadius: 12, elevation:16,shadowColor: "#000",
-                    shadowOffset: {
-                      width: 0,
-                      height: 2,
-                    },
-                    shadowOpacity: 0.25,
-                    shadowRadius: 3.84,}}>
+                  <View style={{width:'95%' ,margin:10,marginTop:0,height: 130,padding: 12, backgroundColor: "white",borderBottomLeftRadius:10,
+                                borderBottomRightRadius:10, elevation:6,shadowColor: "#000",
+                                shadowOffset: {
+                                  width: 0,
+                                  height: 2,
+                                },
+                                shadowOpacity: 0.25,
+                                shadowRadius: 3.84,}}>
                     <Text style={{color: "#364F6B", fontSize: 16, textAlign: "center"}}>נעים להכיר :) </Text>
                     <Text style={{color: "#364F6B", fontSize: 16, textAlign: "center"}}>
 אני עושה לק ג'ל עם מניקור בתשומת לב מירבית - אשמח לקבל אתכן ולעזור לשמור על הציפורניים שלכן יפות ומטופחות לאורך זמן.</Text>
@@ -133,22 +143,25 @@ const Welcome_admin = ({navigation}) => {
                     
                 </View>
                 
-                <View style={{ height: 300, width: '100%', marginVertical: 30}}>
+                <View style={{ height: 300, width: '100%', marginVertical: 30,justifyContent:'center', alignItems:'center', marginVertical:70}}>
                   {Platform.OS === "android"?
-                  <LinearGradient colors={['#f7e6e6','#f5cece', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderTopLeftRadius: 15, borderBottomLeftRadius: 15,height: 50, alignItems: "center", justifyContent: "center"}}>
-                      <Text style={{color: "#364F6B", fontSize: 16}}>העבודות שלי</Text>
+                  <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "95%", borderTopLeftRadius: 15,borderTopRightRadius: 15, height: 50, alignItems: "center", justifyContent: "center", elevation:4}}>
+                      <Text style={{color: "#364F6B", fontSize: 16, fontWeight: 'bold'}}>העבודות שלי</Text>
                   </LinearGradient>
                   :
-                  <LinearGradient colors={['#f7e6e6','#f5cece', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center"}}>
-                      <Text style={{color: "#364F6B", fontSize: 16}}>העבודות שלי</Text>
+                  <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "95%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center"}}>
+                      <Text style={{color: "#364F6B", fontSize: 16, fontWeight: 'bold'}}>העבודות שלי</Text>
                   </LinearGradient>
                   }
-                  <View style={{height: 250,margin:10, elevation:17, backgroundColor: "white", borderRadius:10, shadowColor: "#000",shadowOffset: {
-                        width: 0,
-                        height: 2,
-                      },
-                      shadowOpacity: 0.25,
-                      shadowRadius: 3.84,}}>
+                  
+                  <View style={{height: 290,width: "95%", marginTop: 0,elevation:6, backgroundColor: "white", 
+                                borderBottomLeftRadius:10,borderBottomRightRadius:10, shadowColor: "#000",
+                                shadowOffset: {
+                                  width: 0,
+                                  height: 2,
+                                },
+                                shadowOpacity: 0.25,
+                                shadowRadius: 3.84,}}>
                     <FlatList
                       data={SECTIONS}
                       renderItem={({ item }) => <ListItem item={item} />}
@@ -166,12 +179,12 @@ const Welcome_admin = ({navigation}) => {
               
             <View style={{justifyContent: "center"}}>
              {Platform.OS === "android"?
-                  <LinearGradient colors={['#f7e6e6','#f5cece', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderTopLeftRadius: 15, borderBottomLeftRadius: 15,height: 50, alignItems: "center", justifyContent: "center"}}>
-                      <Text style={{color: "#364F6B", fontSize: 16}}>עקבו אחרי</Text>
+                  <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderTopLeftRadius: 15, borderBottomLeftRadius: 15,height: 50, alignItems: "center", justifyContent: "center"}}>
+                      <Text style={{color: "#364F6B", fontSize: 16,fontWeight: 'bold'}}>עקבו אחרי</Text>
                   </LinearGradient>
                   :
-                  <LinearGradient colors={['#f7e6e6','#f5cece', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center"}}>
-                      <Text style={{color: "#364F6B", fontSize: 16}}>עקבו אחרי</Text>
+                  <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center"}}>
+                      <Text style={{color: "#364F6B", fontSize: 16, fontWeight: 'bold'}}>עקבו אחרי</Text>
                   </LinearGradient>
                   }
             </View>
@@ -202,16 +215,14 @@ const Welcome_admin = ({navigation}) => {
         </StyledContainer>
             
     </ScrollView>
-
-
-    
+   
 
 
     </View>
             {/* Navigation Bar */}
             <View style={{display: 'flex',justifyContent: 'center', alignContent: 'center', position: "absolute", bottom: 23,right: 0, width: "100%"}}>        
                     <View style={{display: 'flex', alignItems: 'center'}}>
-                        <View style={ styles.menuNavigator }>
+                        <LinearGradient colors={['#FFE2E2', '#fad4d4', '#e8a9a9']} locations={[0,0.5,1]} style={styles.menuNavigator}>
     
                             
                               
@@ -228,7 +239,7 @@ const Welcome_admin = ({navigation}) => {
                                 <Entypo name="log-out" size={29} color="#364F6B" />
                             </TouchableOpacity>
     
-                        </View>
+                        </LinearGradient>
                     </View>
                 </View>
             {/* Navigation Bar */}

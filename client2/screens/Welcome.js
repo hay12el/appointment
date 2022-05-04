@@ -53,13 +53,7 @@ const ListItem = ({ item }) => {
         resizeMode="cover"
       />
       {/* <Text style={styles.itemText}>{item.text}</Text> */}
-      <View style={{justifyContent:"center", borderBottomLeftRadius:10,borderBottomRightRadius:10, backgroundColor:'white',height:40,width:'100%', elevation:4,shadowColor: "black",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.58,
-        shadowRadius: 6.00,}}>
+      <View style={{justifyContent:"center", borderBottomLeftRadius:10,borderBottomRightRadius:10, backgroundColor:'white',height:40,width:'100%'}}>
        
         <Text style={{textAlign:'center',fontWeight: 'bold',color: "#364F6B"}}>{item.text}</Text>
       </View>
@@ -115,7 +109,7 @@ const Welcome = ({navigation}) => {
                       <Text style={{color: "#364F6B", fontSize: 16, fontWeight: 'bold'}}>על עצמי</Text>
                   </LinearGradient>
                   :
-                  <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "95%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center"}}>
+                  <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "95%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center",position:"absolute",top:-19}}>
                       <Text style={{color: "#364F6B", fontSize: 16,fontWeight: 'bold'}}>על עצמי</Text>
                   </LinearGradient>
                   }
@@ -146,7 +140,7 @@ const Welcome = ({navigation}) => {
                       <Text style={{color: "#364F6B", fontSize: 16, fontWeight: 'bold'}}>העבודות שלי</Text>
                   </LinearGradient>
                   :
-                  <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "95%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center"}}>
+                  <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "95%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center",position:"absolute",top:-33}}>
                       <Text style={{color: "#364F6B", fontSize: 16, fontWeight: 'bold'}}>העבודות שלי</Text>
                   </LinearGradient>
                   }
@@ -174,17 +168,17 @@ const Welcome = ({navigation}) => {
 
             </InnerContainer>
               
-            <View style={{justifyContent: "center"}}>
              {Platform.OS === "android"?
                   <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderTopLeftRadius: 15, borderBottomLeftRadius: 15,height: 50, alignItems: "center", justifyContent: "center"}}>
                       <Text style={{color: "#364F6B", fontSize: 16,fontWeight: 'bold'}}>עקבו אחרי</Text>
                   </LinearGradient>
                   :
-                  <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center"}}>
-                      <Text style={{color: "#364F6B", fontSize: 16, fontWeight: 'bold'}}>עקבו אחרי</Text>
-                  </LinearGradient>
+                  <View style={{justifyContent: "center",alignItems:"flex-end",marginBottom:35}}>
+                    <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "30%", borderRadius: 15, height: 50, alignItems: "center", justifyContent: "center",position:"absolute",right:-20}}>
+                        <Text style={{color: "#364F6B", fontSize: 16, fontWeight: 'bold'}}>עקבו אחרי</Text>
+                    </LinearGradient>
+                  </View>
                   }
-            </View>
             {/* style={{margin:15,height: 130,padding: 12, backgroundColor: "#F6F6F6", borderRadius: 12}} */}
             <View style={{margin:90,height: 70,display: "flex", flexDirection:"row", alignItems: "center", justifyContent: "center",marginBottom: 50, marginTop:30, backgroundColor: "white", borderRadius: 12, elevation:8,shadowColor: "#000",
                 shadowOffset: {
@@ -312,7 +306,13 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   item: {
-    
+    shadowColor: '#000',
+    shadowOffset: { width: 2, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 4,
+    backgroundColor:'white',
+    borderRadius:9,
     margin: 10,
   },
   itemPhoto: {
