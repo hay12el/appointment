@@ -92,7 +92,7 @@ const Welcome_admin = ({navigation}) => {
 
     
     return (
-      <View style={{height: "100%", flex: 1, backgroundColor: "white", paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0, paddingBottom: 80}}>
+      <View style={{height: "100%", flex: 1, backgroundColor: "white", paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0, }}>
 
       <View style={{height: "100%", flex: 1}}>
               {Platform.OS === "android"?
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   linearGradient: {
-        marginTop: 42,
+        
         height: 180, 
         display: "flex",
         justifyContent:"center", 

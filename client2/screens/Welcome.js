@@ -85,12 +85,19 @@ const Welcome = ({navigation}) => {
     return (
       <View style={{height: "100%", flex: 1, backgroundColor: "white", paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0, paddingBottom: 80}}>
 
+          
       <View style={{height: "100%", flex: 1}}>
               {Platform.OS === "android"?
+                  // <View style={styles.header}>
+                  //   <Image source={require('../assets/header.png')} overflow="visible" style={{width:"100%",
+                  //                       height:"190%", zIndex:2, position:"absolute", top:30}}></Image>
+                  // </View>
                   <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#fa9393']} locations={[0.0, 0.5, 1.0]} style={styles.linearGradient}>
                     <Image source={require('../assets/11.png')} style={{height:180, width:180}}></Image>
                   </LinearGradient>
+
                   :
+
                   <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#fa9393']} locations={[0.0, 0.5, 1.0]} style={styles.linearGradientIOS}>
                     <Image source={require('../assets/11.png')} style={{height:180, width:180}}></Image>
                   </LinearGradient>
@@ -103,7 +110,7 @@ const Welcome = ({navigation}) => {
             
             <InnerContainer>
                 {/* <PageLogo resizeMode="cover" source = {require('./../assets/lak.jpeg')}/> */}
-                <View style={{ height: 180, width: '100%', justifyContent:'center', alignItems:'center'}}>
+                <View style={{ height: 180, width: '100%', justifyContent:'center', alignItems:'center', marginTop:40}}>
                   {Platform.OS === "android"?
                   <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "95%", borderTopLeftRadius: 15,borderTopRightRadius: 15, height: 50, alignItems: "center", justifyContent: "center", elevation:4}}>
                       <Text style={{color: "#364F6B", fontSize: 16, fontWeight: 'bold'}}>על עצמי</Text>
@@ -262,6 +269,13 @@ const Welcome = ({navigation}) => {
 
 
 const styles = StyleSheet.create({
+  header:{
+      marginTop: 20,
+      marginBottom: 60,
+      width:"100%",
+      height: 120, 
+      overflow: 'visible',
+  },
   linearGradient: {
         marginTop: 42,
         height: 180, 
