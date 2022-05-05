@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "commonjs",
+  "type": "commonjs",  
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon config_route.js"
+    "dev": "react-scripts start",
+    "start": "serve -s build",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "npm run build"
   },
   "keywords": [],
   "author": "",
@@ -22,11 +26,13 @@
     "express": "^4.17.2",
     "express-session": "^1.17.2",
     "express-validator": "^6.14.0",
+    "helmet": "^5.0.2",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.2",
     "mongoose": "^6.2.1",
     "nodemon": "^2.0.15",
     "passport": "^0.5.2",
-    "passport-local-mongoose": "^7.0.0"
+    "passport-local-mongoose": "^7.0.0",
+    "serve": "^13.0.2"
   }
 }

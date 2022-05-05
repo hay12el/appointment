@@ -12,7 +12,7 @@ const { use } = require('passport');
 const jwt = require("jsonwebtoken");
 //const router = require('./routes/routes.js'); 
 const User = require('./models/user.js');
-const Event = require('./models/event');
+const Event = require('./models/event');const helmet = require('helmet');
 const {routesInit} = require('./routes/config_route')
 
 const validate = [
@@ -57,6 +57,8 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use(helmet());
+
 
 module.exports = {
     Event, User
@@ -85,14 +87,13 @@ mongoose.connect(
 
 ////////////////////////////////////////////////////////////////////////////////
 
-app.get("/logout", (req, res) => {
-    req.logOut();
-    res.redirect("/");
+app.get("/", (req, res) => {
+    res.send("great!");
 })
 
 //////////////
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log("OK");
 });
 
