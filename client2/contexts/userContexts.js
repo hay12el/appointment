@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const UserContext = createContext({
         isAuthenticated: false,
-        myAdmin: '626132acee9af2167833d3fc',
+        myAdmin: '6272c80b408e4d22a05231c2',
         isAdmin: false,
         id: '',
         userName: '',

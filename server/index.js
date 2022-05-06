@@ -27,7 +27,7 @@ const validate = [
 const generateToken = user => {
     return jwt.sign(
         { _id: user._id },
-        "SHHH, LITTLE S"
+        process.env.S
     );
 }
 
@@ -64,20 +64,16 @@ module.exports = {
     Event, User
 }
 
-// mongoose.connect(
-//     "mongodb://localhost:27017/app",
-//     async (err) => {
-//         if (err) throw err;
-//         console.log("conncted to db")
-//     }
-// )
 
 mongoose.connect(
     "mongodb+srv://cluster0.4x97i.mongodb.net/appointment?retryWrites=true&w=majority",
     {
+        // dbName: 'appointment',
+        // user: 'hay12el',
+        // pass: 'hay1212123',
         dbName: 'appointment',
-        user: 'hay12el',
-        pass: 'hay1212123',
+        user: process.env.USER,
+        pass: process.env.PASS,
         useNewUrlParser: true,
         useUnifiedTopology: true
     }
@@ -96,4 +92,5 @@ app.get("/", (req, res) => {
 app.listen(process.env.PORT || 3000, () => {
     console.log("OK");
 });
+
 

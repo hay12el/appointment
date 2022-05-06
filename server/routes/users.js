@@ -43,7 +43,7 @@ router.post("/login", async (req, res) => {
         if(!pass){
             return res.status(401).json({msg: "לא נמצא משתמשת נסי שוב.."});
         }else{
-            jwt.sign({_id: user._id}, "SHHHZESOD95", {expiresIn:"30 days"},(err, token) => {
+            jwt.sign({_id: user._id}, process.env.S, {expiresIn:"30 days"},(err, token) => {
                 if (err){
                     console.log(err);
                 }else{
@@ -62,7 +62,7 @@ router.post("/register", async (req, res) => {
         const user = new User(req.body);
         user.password = await bcrypt.hash(req.body.password, 10);
         await user.save();
-        let newToken = jwt.sign({_id: user._id}, "SHHHZESOD95", {expiresIn:"30 days"});
+        let newToken = jwt.sign({_id: user._id}, process.env.S, {expiresIn:"30 days"});
         res.send({'token': newToken, 'user': user});
     }
     catch(err){
