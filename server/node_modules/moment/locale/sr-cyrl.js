@@ -38,8 +38,7 @@
             return wordKey[2];
         },
         translate: function (number, withoutSuffix, key, isFuture) {
-            var wordKey = translator.words[key],
-                word;
+            var wordKey = translator.words[key];
 
             if (key.length === 1) {
                 // Nominativ
@@ -47,7 +46,7 @@
                 return isFuture || withoutSuffix ? wordKey[0] : wordKey[1];
             }
 
-            word = translator.correctGrammaticalCase(number, wordKey);
+            const word = translator.correctGrammaticalCase(number, wordKey);
             // Nominativ
             if (key === 'yy' && withoutSuffix && word === 'годину') {
                 return number + ' година';

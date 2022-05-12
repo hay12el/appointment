@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { Image, ScrollView , TouchableOpacity, SafeAreaView,StyleSheet , Text, Platform, Button, Modal} from "react-native";
+import { Image, ScrollView , TouchableOpacity, SafeAreaView,StyleSheet , Text, Platform, Alert} from "react-native";
 import { Formik} from "formik";
 import {LinearGradient} from 'expo-linear-gradient';
 import {
@@ -54,6 +54,7 @@ const validationSchema = yup.object().shape({
 const SignUp = ({navigation}) => {
     const {Login} = useContext(UserContext);
     const [hidePassword, setHidePassword] = useState(true);
+    const [hidePassword1, setHidePassword1] = useState(true);
     const [show, setShow] = useState(false);
     const [date, setDate] = useState(new Date(1598051730000));
     const [dob, setDob] = useState(new Date(1598051730000));
@@ -71,7 +72,7 @@ const SignUp = ({navigation}) => {
     }
 
     const signup = async (values, formikActions) => {
-        console.log("checked");
+        console.log(errors.password);
         const res = await client.post('/users/register',{
             "username": values.name,
             "email": values.email,
@@ -95,11 +96,11 @@ const SignUp = ({navigation}) => {
         <SafeAreaView style={{flex:1,paddingTop: Platform.OS === "android" ? 45 : 0, backgroundColor:"white"}}>
 
                 {Platform.OS === "android"?
-                  <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#fa9393']} locations={[0.0, 0.5, 1.0]} style={styles.linearGradient}>
+                  <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#ffa8a8']} locations={[0.0, 0.7, 1.0]} style={styles.linearGradient}>
                     <Image source={require('../assets/11.png')} style={{height:180, width:180}}></Image>
                   </LinearGradient>
                   :
-                  <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#fa9393']} locations={[0.0, 0.5, 1.0]} style={styles.linearGradientIOS}>
+                  <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#ffa8a8']} locations={[0.0, 0.7, 1.0]} style={styles.linearGradientIOS}>
                     <Image source={require('../assets/11.png')} style={{height:180, width:180}}></Image>
                   </LinearGradient>
                  }
@@ -124,7 +125,7 @@ const SignUp = ({navigation}) => {
                             onBlur={handleBlur('name')}
                             value={values.name}
                             />
-                           
+                        <Text style={styles.error}>{touched.name && errors.name}</Text>
                         <MyTextInput 
                             label="תאריך לידה"
                             icon = "calendar"
@@ -137,18 +138,6 @@ const SignUp = ({navigation}) => {
                             editable ={false}
                             showDatePicker={showDatePicker}
                             /> 
-                            
-{/* 
-                            <View>
-                                <LeftIcon>
-                                    <Octicons name={"calendar"} size={30} color= {brand} />
-                                </LeftIcon>
-                                <StyledInputLabel>{"תאריך לידה"}</StyledInputLabel>
-                                <TouchableOpacity onPress={() => showDatePicker()}>
-                                        <StyledTextInput {...props} />
-                                </TouchableOpacity>
-                                
-                            </View> */}
                         
 
                             {show && Platform.OS === 'android' && (
@@ -164,12 +153,7 @@ const SignUp = ({navigation}) => {
                                 />
                                 )}
                                 {show && Platform.OS === 'ios' && (
-                                    
-                            // <Modal
-                            //     isVisible={show}
-                            //     animationType="fade"
-                            //     transparent={true}
-                            // >
+                            
                                 <View style={styles.centeredView}>
                                     <View style={styles.modalView}>
                                         <DateTimePicker
@@ -191,7 +175,6 @@ const SignUp = ({navigation}) => {
                                         </LinearGradient>
                                     </View>
                                 </View>
-                            //  </Modal>
                     )}
                         <MyTextInput 
                             label="כתובת מייל"
@@ -203,7 +186,7 @@ const SignUp = ({navigation}) => {
                             value={values.email}
                             keboardType="email-address"
                             />
-                           
+                        <Text style={styles.error}>{touched.email && errors.email}</Text>
                         <MyTextInput 
                             label="טלפון"
                             icon = "broadcast"
@@ -214,7 +197,7 @@ const SignUp = ({navigation}) => {
                             value={values.phone}
                             keboardType="phone"
                             />
-                            
+                        <Text style={styles.error}>{touched.phone && errors.phone}</Text>
                         <MyTextInput 
                             label="סיסמא"
                             icon = "lock"
@@ -224,10 +207,11 @@ const SignUp = ({navigation}) => {
                             onBlur={handleBlur('password')}
                             value={values.password}
                             secureTextEntry={hidePassword}
-                            isPassword={hidePassword}
+                            isPassword={true}
                             hidePassword={hidePassword}
                             setHidePassword={setHidePassword}
                             />
+                        <Text style={styles.error}>{touched.password && errors.password}</Text>
                         <MyTextInput 
                             label="אימות סיסמא"
                             icon = "lock"
@@ -236,11 +220,12 @@ const SignUp = ({navigation}) => {
                             onChangeText={handleChange('confirmPassword')}
                             onBlur={handleBlur('confirmPassword')}
                             value={values.confirmPassword}
-                            secureTextEntry={hidePassword}
-                            isPassword={hidePassword}
-                            hidePassword={hidePassword}
-                            setHidePassword={setHidePassword}
+                            secureTextEntry={hidePassword1}
+                            isPassword1={true}
+                            hidePassword1={hidePassword1}
+                            setHidePassword1={setHidePassword1}
                         />
+                        <Text style={styles.error}>{touched.confirmPassword && errors.confirmPassword}</Text>
                         <TouchableOpacity onPress={handleSubmit} style={styles.accept}>
                             <Text>
                                 הרשמי
@@ -249,7 +234,7 @@ const SignUp = ({navigation}) => {
                         
                         <Line/>
 
-                        <ExtraView>
+                        <ExtraView style={{direction:'rtl'}}>
                             <ExtraText>
                                 כבר יש לך חשבון?
                             </ExtraText>
@@ -257,13 +242,6 @@ const SignUp = ({navigation}) => {
                             <TextLink>
                             </TextLink>
                         </ExtraView>
-                        
-
-                        <Text style={styles.error}>{touched.name && errors.name}</Text>
-                        <Text style={styles.error}>{touched.phone && errors.phone}</Text>
-                        <Text style={styles.error}>{touched.password && errors.password}</Text>
-                        <Text style={styles.error}>{touched.email && errors.email}</Text>
-                        <Text style={styles.error}>{touched.confirmPassword && errors.confirmPassword}</Text>
 
                     </StyledFormArea>
                 )}
@@ -368,8 +346,8 @@ const styles = StyleSheet.create({
     }
 })
 
-const MyTextInput = ({label, icon, isPassword, hidePassword,
-    setHidePassword, isDate, showDatePicker, ...props}) => {
+const MyTextInput = ({label, icon, isPassword, isPassword1, hidePassword,hidePassword1,
+    setHidePassword, setHidePassword1, isDate, showDatePicker, ...props}) => {
     return (
         <View>
             <LeftIcon>
@@ -387,9 +365,13 @@ const MyTextInput = ({label, icon, isPassword, hidePassword,
             }
             {!isDate && <StyledTextInput {...props} />}
             {isPassword && (
-
-                <RightIcon onPress={()=> setHidePassword(!hidePassword)}>
-                    <Ionicons size={30} color={derLight} name={hidePassword ? 'md-eye-off' : 'md-eye'}/>
+                <RightIcon onPressIn={()=> setHidePassword(!hidePassword)} onPressOut={()=> setHidePassword(!hidePassword)}>
+                    <Ionicons size={30} color={derLight} name={'md-eye-off'}/>
+                </RightIcon>
+            )}
+            {isPassword1 && (
+                <RightIcon onPressIn={()=> setHidePassword1(!hidePassword1)} onPressOut={()=> setHidePassword1(!hidePassword1)}>
+                    <Ionicons size={30} color={derLight} name={'md-eye-off'}/>
                 </RightIcon>
             )}
         </View>

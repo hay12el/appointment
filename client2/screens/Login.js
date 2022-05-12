@@ -33,7 +33,10 @@ import {Octicons, Ionicons} from '@expo/vector-icons';
 /*import {colors} from './../components/styles';*/
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { useState } from "react";
-import {UserContext} from '../contexts/userContexts'
+import {UserContext} from '../contexts/userContexts';
+import Constants from "expo-constants";
+
+const StatusBarHeight = Constants.statusBarHeight;
 
 const Login = ({navigation}) => {
     const [email, setEmail] = useState('');
@@ -59,15 +62,15 @@ const Login = ({navigation}) => {
     }
 
     return (
-        <StyledContainer>
+        <View style={{height:"100%", paddingTop: StatusBarHeight}}>
             <StatusBar style="dark" />
             <InnerContainer>
                 {Platform.OS === "android"?
-                  <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#fa9393']} locations={[0.0, 0.5, 1.0]} style={styles.linearGradient}>
+                  <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#ffa8a8']} locations={[0.0, 0.7, 1.0]} style={styles.linearGradient}>
                     <Image source={require('../assets/11.png')} style={{height:180, width:180}}></Image>
                   </LinearGradient>
                   :
-                  <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#fa9393']} locations={[0.0, 0.5, 1.0]} style={styles.linearGradientIOS}>
+                  <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#ffa8a8']} locations={[0.0, 0.7, 1.0]} style={styles.linearGradientIOS}>
                     <Image source={require('../assets/11.png')} style={{height:180, width:180}}></Image>
                   </LinearGradient>
                  }
@@ -95,7 +98,7 @@ const Login = ({navigation}) => {
                             onBlur={handleBlur('password')}
                             value={values.password}
                             secureTextEntry={hidePassword}
-                            isPassword={hidePassword}
+                            isPassword={true}
                             hidePassword={hidePassword}
                             setHidePassword={setHidePassword}
                         />
@@ -106,7 +109,7 @@ const Login = ({navigation}) => {
                         </StyledButton>
                         <Line/>
 
-                        <ExtraView>
+                        <ExtraView style={{direction:'rtl'}}>
                             <ExtraText>
                                 עוד לא נרשמת?
                             </ExtraText>
@@ -120,7 +123,7 @@ const Login = ({navigation}) => {
 
                 </Formik>
             </InnerContainer>
-        </StyledContainer>
+        </View>
     );
 }
 
@@ -134,7 +137,7 @@ const MyTextInput = ({label, icon, isPassword, hidePassword,setHidePassword, ...
             <StyledTextInput {...props} />
             {isPassword && (
 
-                <RightIcon onPress={()=> setHidePassword(!hidePassword)}>
+                <RightIcon onPressIn={()=> setHidePassword(!hidePassword)} onPressOut={()=> setHidePassword(!hidePassword)}>
                     <Ionicons size={30} color={derLight} name={hidePassword ? 'md-eye-off' : 'md-eye'}/>
                 </RightIcon>
             )}

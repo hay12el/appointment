@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View ,Button, Pressable, FlatList, TouchableOpacity, Linking, Image ,Modal, Text, ActivityIndicator, Alert} from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import client from '../api/client';
-import { Ionicons, Entypo, MaterialIcons, FontAwesome, Feather } from '@expo/vector-icons';
+import { Ionicons, Entypo, MaterialIcons, FontAwesome, Feather, FontAwesome5} from '@expo/vector-icons';
 import { UserContext } from '../contexts/userContexts';
 import {API, ADMIN_ID} from '@env';
 import { Overlay } from 'react-native-elements';
@@ -145,9 +145,9 @@ export default function Admin_pannel({navigation}) {
             <View> 
                 {item.iscatched ? 
                             
-                <View style={{height: 180, display: "flex", flexDirection: 'column', alignItems: 'center',justifyContent:"space-between"
-                                , elevation : 8, backgroundColor: "white" ,shadowOpacity: 3,borderRadius: 20, marginHorizontal: 20, marginVertical: 5}} >
-                    <View style={{ marginTop: 30,display: 'flex', flexDirection: 'row', alignContent: 'flex-start',justifyContent:"center"}}>
+                <View style={{height: 180, display: "flex", flexDirection: 'column', alignItems: 'center',justifyContent:"center"
+                                , backgroundColor: "white" ,borderWidth:1, marginHorizontal: 3, marginVertical: 0}} >
+                    <View style={{ marginTop: 3,display: 'flex', flexDirection: 'row', alignContent: 'flex-start',justifyContent:"center",direction: 'rtl'}}>
                         <Text style={{textAlign: 'right',fontSize: 18}}>
                                 יום {days[selectedDate.getDay()]} {selectedDate.getDate()}/{selectedDate.getMonth() + 1}
                         </Text>
@@ -157,17 +157,18 @@ export default function Admin_pannel({navigation}) {
                         </Text>
                     </View>
                             
-                    <View style={{width: "95%",display: "flex", flexDirection:"column", justifyContent:"center", alignItems:"center", margin: 8,backgroundColor:"#f5f5f5", borderRadius:10, paddingBottom: 10}}>  
-                                    
+                    {!item.user.isAdmin? 
+                    <View style={{width: "95%",display: "flex", flexDirection:"column", justifyContent:"center", alignItems:"center", margin: 12,backgroundColor:"#f5f5f5", borderRadius:10, paddingBottom: 10}}>  
+                                 
                         <View style={{marginBottom: 18}}>
                                         
                             <Text style={{fontSize:16}}>התור של {item.user.username}</Text> 
                                         
                         </View>
 
-                        <View style={{display: "flex" ,flexDirection:"row", alignContent: "center",justifyContent:"center"}}> 
+                        <View style={{display: "flex" ,flexDirection:"row", alignContent: "center",justifyContent:"center", direction:'rtl'}}> 
                                         
-                            <Pressable style={styles.buttonCancle} onPress={() => showAlert()} >
+                            <Pressable style={[styles.button, styles.buttonOpen,{backgroundColor:"#fff7f7",}]} onPress={() => showAlert()} >
                                 <Text style={{fontSize: 14}}>ביטול התור</Text>
                             </Pressable>
 
@@ -182,23 +183,39 @@ export default function Admin_pannel({navigation}) {
                             </TouchableOpacity>
 
                         </View>
-
                     </View>
+                    :
+                    
+                    <View style={{width: "95%",display: "flex", flexDirection:"column", justifyContent:"center", alignItems:"center", 
+                                    margin: 12,backgroundColor:"#f5f5f5", borderRadius:10, paddingBottom: 10}}>      
+                        <View style={{marginBottom: 18}}>
+                                        
+                            <Text style={{fontSize:16}}>ביטלת את התור</Text> 
+                                        
+                        </View>
+
+                        <View style={{display: "flex" ,flexDirection:"row", alignContent: "center",justifyContent:"center", direction:'rtl'}}> 
+                                        
+                            <Pressable style={[styles.button, styles.buttonOpen,{backgroundColor:"#fff7f7",}]} onPress={() => deleteQueue(item.user._id, item.postId, selectedDate)} >
+                                <Text style={{fontSize: 14}}>שחרור התור</Text>
+                            </Pressable>
+                        </View>
+                    </View>
+                    }    
                 </View>
                 : 
-                <View style={{height: 110, display: "flex", flexDirection: 'column', alignItems: 'center',justifyContent:"space-between", 
-                                elevation : 8, backgroundColor: "white" ,shadowOpacity: 3,borderRadius: 20, padding: 3, paddingBottom:10,marginHorizontal: 20, marginVertical: 5, }}>
+                <View style={{height: 110, display: "flex", flexDirection: 'row', alignItems: 'center',justifyContent:"space-around", direction: 'rtl',
+                                backgroundColor: "white" ,borderWidth:1, padding: 3, paddingBottom:10,marginHorizontal: 3, marginVertical: 0, backgroundColor:"#fcfcfc"}}>
                     
-                        <View style={{ marginTop: 10,display: 'flex', flexDirection: 'row', alignContent: 'flex-start',justifyContent:"center"}}>
+                        <View style={{ marginTop: 10,display: 'flex', flexDirection: 'column', alignContent: 'flex-end',justifyContent:"center"}}>
                             
                             <Text style={{textAlign: 'right',fontSize: 18}}>
-                                יום {days[selectedDate.getDay()]} {selectedDate.getDate()}/{selectedDate.getMonth() + 1}
+                                {days[selectedDate.getDay()]} {selectedDate.getDate()}/{selectedDate.getMonth() + 1}
                             </Text>
 
-                            <Text> </Text>
 
-                            <Text style={{textAlign: 'right',fontSize: 18}}>
-                                בשעה {item.hour}:00 
+                            <Text style={{textAlign: 'center',fontSize: 18}}>
+                                {item.hour}:00 
                             </Text>
 
                         </View>
@@ -361,7 +378,7 @@ export default function Admin_pannel({navigation}) {
                             
     
                             <TouchableOpacity onPress={() => navigation.navigate("Admin_pannel")} style={{marginRight:10}}>
-                                <MaterialIcons name="playlist-add-check" size={35} color="#364F6B" />
+                                <FontAwesome name="calendar" size={28} color="#364F6B" />
                             </TouchableOpacity>
 
                             <TouchableOpacity onPress={() => showAlertSignOut()}>
@@ -402,9 +419,9 @@ const styles = StyleSheet.create({
         elevation:4, 
         backgroundColor:'white',
         width: '99%', 
-        borderRadius:20,
+        borderRadius:5,
         borderWidth:4,
-        borderColor:"#FFC7C7"
+        borderColor:"#f5f5f5"
     },
     button: {
         shadowColor: "#000",

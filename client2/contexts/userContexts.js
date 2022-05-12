@@ -17,7 +17,7 @@ export const UserProvider = ({ children }) => {
     const [user, setUser] = useState({ 
         isAuthenticated: false,
         isAdmin: false,
-        myAdmin: '626132acee9af2167833d3fc',
+        myAdmin: '6272c80b408e4d22a05231c2',
         id:'',
         userName: '',
         email: '',
@@ -30,7 +30,7 @@ export const UserProvider = ({ children }) => {
         setUser((user) => ({
             id: id,
             userName: name,
-            myAdmin: '626132acee9af2167833d3fc',
+            myAdmin: '6272c80b408e4d22a05231c2',
             isAuthenticated: true,
             isAdmin: isAdmin,
             email: email,

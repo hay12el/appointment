@@ -10097,8 +10097,7 @@
             return wordKey[2];
         },
         translate: function (number, withoutSuffix, key, isFuture) {
-            var wordKey = translator$1.words[key],
-                word;
+            var wordKey = translator$1.words[key];
 
             if (key.length === 1) {
                 // Nominativ
@@ -10106,7 +10105,7 @@
                 return isFuture || withoutSuffix ? wordKey[0] : wordKey[1];
             }
 
-            word = translator$1.correctGrammaticalCase(number, wordKey);
+            const word = translator$1.correctGrammaticalCase(number, wordKey);
             // Nominativ
             if (key === 'yy' && withoutSuffix && word === 'годину') {
                 return number + ' година';
@@ -10220,8 +10219,7 @@
             return wordKey[2];
         },
         translate: function (number, withoutSuffix, key, isFuture) {
-            var wordKey = translator$2.words[key],
-                word;
+            var wordKey = translator$2.words[key];
 
             if (key.length === 1) {
                 // Nominativ
@@ -10229,7 +10227,7 @@
                 return isFuture || withoutSuffix ? wordKey[0] : wordKey[1];
             }
 
-            word = translator$2.correctGrammaticalCase(number, wordKey);
+            const word = translator$2.correctGrammaticalCase(number, wordKey);
             // Nominativ
             if (key === 'yy' && withoutSuffix && word === 'godinu') {
                 return number + ' godina';

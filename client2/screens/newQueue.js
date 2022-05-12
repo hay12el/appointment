@@ -8,6 +8,7 @@ import { UserContext } from '../contexts/userContexts';
 import {API, ADMIN_ID} from '@env';
 import { Overlay } from 'react-native-elements';
 import {LinearGradient} from 'expo-linear-gradient';
+//import User from '../../server/models/user';
 
 
 const days = {  0: "ראשון",
@@ -61,6 +62,7 @@ export default function Calendar(navigation) {
                 setMassage(false);
                 toggleOverlay();
                 setIndicator(!indicator);
+                
             }else{
                 ErrortoggleOverlay();
                 setThinking(false);
@@ -84,7 +86,7 @@ export default function Calendar(navigation) {
 
     useEffect(async () => {
         setThinking(true);
-        await client.post('/events/getDayQueues', {"date" : selectedDate}, {
+        await client.post('/events/getDayQueues', {"date" : selectedDate,"admin": user.myAdmin}, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -100,6 +102,7 @@ export default function Calendar(navigation) {
         setSuccess(true);
         setTimeout(() => {
             setSuccess(false);
+            visi();
         }, 4200)
     };
 
@@ -222,6 +225,8 @@ export default function Calendar(navigation) {
                                 'שישי', 
                                 'שבת'
                         ]}
+
+                        minDate={new Date()}
 
                         todayBackgroundColor = {'#FFC7C7'}
 
@@ -426,7 +431,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         height:30,
         width:78,
-        left: "50%",
+        left: "40%",
         top: "50%",
         alignItems: 'center',
         justifyContent: 'center'
@@ -473,6 +478,7 @@ const styles = StyleSheet.create({
        fontSize: 13,
    },
    buttons: {
+       direction:'rtl',
        height: 55,
        borderBottomLeftRadius:10, 
        borderBottomRightRadius:10,

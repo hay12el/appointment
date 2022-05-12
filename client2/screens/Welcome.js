@@ -1,16 +1,20 @@
 import { StatusBar } from "expo-status-bar";
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import {LinearGradient} from 'expo-linear-gradient';
 import Calendar from './newQueue';
-import { Ionicons, Entypo, MaterialIcons, FontAwesome5, AntDesign } from '@expo/vector-icons';
+import { Ionicons, Entypo, MaterialIcons, FontAwesome5, AntDesign, FontAwesome } from '@expo/vector-icons';
 import {
     StyledContainer,
     InnerContainer
 } from './../components/styles'
-import {View, Text, Alert ,Image,TouchableOpacity, StyleSheet, Linking, ScrollView,Button, Platform} from 'react-native';
+import {View, Text, Alert ,Pressable,Image,TouchableOpacity,TouchableHighlight,StyleSheet, Linking, ScrollView,Button, Platform, Touchable, Modal} from 'react-native';
 import {UserContext} from '../contexts/userContexts'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FlatList } from "react-native-gesture-handler";
+import { Overlay } from 'react-native-elements';
+import Constants from "expo-constants";
+
+const StatusBarHeight = Constants.statusBarHeight;
 
 const SECTIONS = 
     [
@@ -43,8 +47,11 @@ const SECTIONS =
     ];
 
 const ListItem = ({ item }) => {
+  const [open, setOpen] = useState(false);
   return (
     <View style={styles.item}>
+      <TouchableOpacity delayPressIn={80} onPressIn={()=> setOpen(!open)} onPressOut={()=> setOpen(!open) }>
+
       <Image
         source={{
           uri: item.uri,
@@ -57,11 +64,25 @@ const ListItem = ({ item }) => {
        
         <Text style={{textAlign:'center',fontWeight: 'bold',color: "#364F6B"}}>{item.text}</Text>
       </View>
+      </TouchableOpacity>
+      {/* <Overlay isVisible={open} onBackdropPress={toggleOverlay}> */}
+      <Overlay isVisible={open} overlayStyle={{padding:0}}>
+          <View style={{height: 500,display: "flex", flexDirection:"column", width: 300, borderRadius:15,justifyContent:"center", alignItems:"center", backgroundColor:"#e5e5e8"}}>
+            <Image
+                source={{
+                  uri: item.uri,
+                }}
+                style={{height:"100%", width:"100%"}}
+                resizeMode="cover"
+            />
+          </View>
+      </Overlay>
     </View>
   );
 };
 
 const Welcome = ({navigation}) => {
+      const [massage, setMassage] = useState(false);
       const {user, Logout} = useContext(UserContext);
 
       const logout = async () => {
@@ -74,31 +95,59 @@ const Welcome = ({navigation}) => {
           }
     }
 
-    const showAlertSignOut = () => {
-        Alert.alert('התנתקות', 
-                    'האם את בטוחה שאת רוצה להתנתק?',
-                    [{text:'כן', onPress: ()=> logout()},
-                    {text:'ביטול'}])
-    }
-
     
     return (
-      <View style={{height: "100%", flex: 1, backgroundColor: "white", paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0, paddingBottom: 80}}>
+      <View style={{height: "100%", flex: 1, backgroundColor: "white", paddingTop: StatusBarHeight, paddingBottom: 80}}>
 
-          
+      {/* Log Out Alert */}
+      
+      <Modal            
+          animationType = {"fade"}  
+          transparent = {true}  
+          visible = {massage}  
+          onRequestClose = {() => setMassage(!massage)}>  
+
+                        {/*All views of Modal*/}  
+                        <View style = {styles.modal}>  
+                            <View style={{flex:2, justifyContent: "center", alignItems: "center"}}>
+                                <Text>האם את בטוחה שאת רוצה להתנתק?</Text>
+                            </View>
+                            <View style={[styles.buttons,{flex:1}]}>
+
+                                    <Pressable
+                                        onPress={() => setMassage(!massage)}
+                                    >
+                                        <LinearGradient colors={['#FFE2E2', '#fad4d4', '#e8b7b7']} locations={[0.0, 0.5, 1.0]} style={[styles.button, styles.buttonOpen]}>
+                                            <Text style={styles.textStyle}>ביטול</Text>
+                                        </LinearGradient>
+                                    </Pressable>
+                                        
+                                    <Pressable
+                                        onPress={()=> logout()}
+                                        >
+                                        <LinearGradient colors={['#FFE2E2', '#fad4d4', '#e8b7b7']} locations={[0.0, 0.5, 1.0]} style={[styles.button, styles.buttonOpen]}>
+                                            <Text style={styles.textStyle}>כן</Text>
+                                        </LinearGradient>
+                                    </Pressable>
+                                    
+                            </View>
+                        </View>  
+                    </Modal>
+      
+      {/* Log Out Alert */}
+
+
+
       <View style={{height: "100%", flex: 1}}>
               {Platform.OS === "android"?
-                  // <View style={styles.header}>
-                  //   <Image source={require('../assets/header.png')} overflow="visible" style={{width:"100%",
-                  //                       height:"190%", zIndex:2, position:"absolute", top:30}}></Image>
-                  // </View>
-                  <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#fa9393']} locations={[0.0, 0.5, 1.0]} style={styles.linearGradient}>
+        
+                  <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#ffa8a8']} locations={[0.0, 0.70, 1.0]} style={styles.linearGradient}>
                     <Image source={require('../assets/11.png')} style={{height:180, width:180}}></Image>
                   </LinearGradient>
 
                   :
 
-                  <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#fa9393']} locations={[0.0, 0.5, 1.0]} style={styles.linearGradientIOS}>
+                  <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#ffa8a8']} locations={[0.0, 0.7, 1.0]} style={styles.linearGradientIOS}>
                     <Image source={require('../assets/11.png')} style={{height:180, width:180}}></Image>
                   </LinearGradient>
               }
@@ -110,7 +159,7 @@ const Welcome = ({navigation}) => {
             
             <InnerContainer>
                 {/* <PageLogo resizeMode="cover" source = {require('./../assets/lak.jpeg')}/> */}
-                <View style={{ height: 180, width: '100%', justifyContent:'center', alignItems:'center', marginTop:40}}>
+                <View style={{ height: 180, width: '100%', justifyContent:'center', alignItems:'center', marginTop:0}}>
                   {Platform.OS === "android"?
                   <LinearGradient colors={['#fffafa','#f7dada', '#e8a9a9']} locations={[0.0,0.5,1.0]} style={{width: "95%", borderTopLeftRadius: 15,borderTopRightRadius: 15, height: 50, alignItems: "center", justifyContent: "center", elevation:4}}>
                       <Text style={{color: "#364F6B", fontSize: 16, fontWeight: 'bold'}}>על עצמי</Text>
@@ -242,7 +291,8 @@ const Welcome = ({navigation}) => {
                         
 
                         <TouchableOpacity onPress={() => navigation.navigate("MyQueues")} style={{marginRight:10}}>
-                            <MaterialIcons name="playlist-add-check" size={35} color="#364F6B" />
+                            {/* <MaterialIcons name="playlist-add-check" size={35} color="#364F6B" /> */}
+                            <FontAwesome name="calendar" size={28} color="#364F6B" />
                         </TouchableOpacity>
 
                         <View style={{position: 'absolute', right: "53%", bottom: 65}}>
@@ -253,7 +303,7 @@ const Welcome = ({navigation}) => {
                             <FontAwesome5 name="waze" size={29} color="#364F6B" />
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => showAlertSignOut()}>
+                        <TouchableOpacity onPress={()=>setMassage(!massage)}>
                             <Entypo name="log-out" size={29} color="#364F6B" />
                         </TouchableOpacity>
 
@@ -277,7 +327,7 @@ const styles = StyleSheet.create({
       overflow: 'visible',
   },
   linearGradient: {
-        marginTop: 42,
+
         height: 180, 
         display: "flex",
         justifyContent:"center", 
@@ -286,7 +336,6 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius:25,  
     },
     linearGradientIOS: {
-        marginTop: 42,
         height: 180, 
         display: "flex",
         justifyContent:"center", 
@@ -294,6 +343,7 @@ const styles = StyleSheet.create({
         borderRadius:25,  
     },
   menuNavigator: {
+    direction: 'rtl',
     display: 'flex',
     flexDirection: 'row', 
     justifyContent:'space-between', 
@@ -345,6 +395,60 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 255, 255, 0.5)',
     marginTop: 5,
   },
+  text: {  
+      color: '#3f2949',  
+      fontSize: 16,
+      marginTop: 10  
+   },
+   textStyle:{
+       fontSize: 13,
+   },
+   buttons: {
+       direction:'rtl',
+       height: 55,
+       borderBottomLeftRadius:10, 
+       borderBottomRightRadius:10,
+       backgroundColor: '#f1f1f1',
+       alignItems: 'center',
+       justifyContent: 'center',
+       width: "100%",
+       display: 'flex',
+       flexDirection: 'row',
+       bottom: 0
+   },
+    button: {
+    borderRadius: 20,
+    padding: 10,
+    width: 110,
+    alignItems:'center',  
+    elevation: 8,
+    marginHorizontal:24,
+    height: 40
+  },
+  buttonOpen: {
+    backgroundColor: "#FFf6f6",
+  },
+  modal: {  
+        elevation: 30,
+        justifyContent: "space-between",  
+        alignContent: 'center',
+        alignItems: 'center',   
+        backgroundColor : "#f8f8f8",   
+        height: 150 ,  
+        width: '80%',  
+        borderRadius:10,  
+        borderWidth: 1,  
+        borderColor: '#fff', 
+        shadowColor: "black",
+        shadowOffset: {
+            width: 0,
+            height: 12,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 16.00,
+        marginTop: '80%',  
+        marginLeft: 40,  
+   },
 });
 
 export default Welcome;

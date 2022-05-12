@@ -23,7 +23,8 @@ router.post("/getDayQueues", async (req, res) => {
     var year = dateObj.getUTCFullYear();
     var Day = new Date(year, month, day, 00);
     var nextDay = new Date(year, month, day+1, 00);
-    await Event.find({time: {$gte: Day, 
+    console.log(req.body.admin);
+    await Event.find({time: {admin: req.body.admin,$gte: Day, 
                                            $lt: nextDay}}).then((response) => {
                                                const hours = response.map(x => new Date(x.time))
                                                const hoursToReturn = hours.map(x => x.getUTCHours())
@@ -170,7 +171,7 @@ router.post("/AdminCatchQueue", async (req, res) => {
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
     var hourN = req.body.hour;
-    var time = new Date(year, month, day, hourN + 3);
+    var time = new Date(year, month, day, hourN);
     console.log(time);
 
     const queue = new Event({
