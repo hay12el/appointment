@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
+import * as Device from 'expo-device';
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View ,ScrollView, Pressable, FlatList, TouchableOpacity, Image ,Modal, Text, ActivityIndicator, Platform} from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
@@ -8,8 +9,10 @@ import { UserContext } from '../contexts/userContexts';
 import {API, ADMIN_ID} from '@env';
 import { Overlay } from 'react-native-elements';
 import {LinearGradient} from 'expo-linear-gradient';
-//import User from '../../server/models/user';
-
+import * as Permissions from 'expo-permissions';
+import * as Notifications from 'expo-notifications';
+import Constants from 'expo-constants';
+import storage from "@react-native-async-storage/async-storage"
 
 const days = {  0: "ראשון",
                 1: "שני", 
@@ -20,7 +23,20 @@ const days = {  0: "ראשון",
                 6: "שבת"
             };
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true
+  })
+});
+
 export default function Calendar(navigation) {
+    const [notification, setNotification] = useState(false);
+    const notificationListener = useRef();
+    const responseListener = useRef();
+    const [expoPushToken, setExpoPushToken] = useState('');
+
     const [thinking, setThinking] = useState(false);
     const [indicator, setIndicator] = useState(false);
     const [toApear, SetApearence] = useState(false);
@@ -48,21 +64,37 @@ export default function Calendar(navigation) {
         
     ]);
 
+    async function schedulePushNotification(ddate, hhour) {
+
+        var dateObj = new Date(ddate);
+        var month = dateObj.getUTCMonth(); //months from 1-12
+        var day = dateObj.getUTCDate();
+        var year = dateObj.getUTCFullYear();
+        const trigger = new Date(year,month,day-1 ,12);
+        await Notifications.scheduleNotificationAsync({
+            content: {
+            title: "נעמה מניקור 💅🏼",
+            body: ` קיים תור אצלי מחר בשעה ${hhour+3}:00`,
+            data: { data: 'goes here' },
+            },
+            trigger,
+        });
+    }
+
     const addQueue = async () => {
         setThinking(true);
-        console.log(user);
         await client.post('/events/addQueue', {'user': user, 'time': selectedDate, 'hour': choousenHour, 'admin': ADMIN_ID} , {
             headers: {
                 'Content-Type': 'application/json'
             }
         })
-        .then((response) => {
+        .then(async (response) => {
             if(!(typeof(response.data) == "string")){
                 setThinking(false);
                 setMassage(false);
                 toggleOverlay();
                 setIndicator(!indicator);
-                
+                await schedulePushNotification(selectedDate, choousenHour);
             }else{
                 ErrortoggleOverlay();
                 setThinking(false);
@@ -84,18 +116,76 @@ export default function Calendar(navigation) {
         setSelectedDate(a); 
     }
 
+    // get permission to sent notifications.
+  useEffect(() => {
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+
+  async function registerForPushNotificationsAsync() {
+    let token;
+    if (Device.isDevice) {
+        const { status: existingStatus } = await Notifications.getPermissionsAsync();
+        let finalStatus = existingStatus;
+        if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+        }
+        if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
+        return;
+        }
+        token = (await Notifications.getExpoPushTokenAsync()).data;
+    } else {
+        alert('Must use physical device for Push Notifications');
+    }
+
+    if (Platform.OS === 'android') {
+        Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
+        });
+    }
+
+    return token;
+    }
+
     useEffect(async () => {
-        setThinking(true);
-        await client.post('/events/getDayQueues', {"date" : selectedDate,"admin": user.myAdmin}, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then((response) => {
+
+        // chaeck if it's friday or saturday
+        let x = selectedDate;
+        if(x.getDay() == 6 || x.getDay() == 5)
+        {
             setThinking(false);
-            setCatchH(response.data.events);
-        }).catch((err) => {
-            console.log(err);
-        })
+            setCatchH([9,10,11,12,13,14,15,16,17,18,19,20]);
+        }
+        else{
+            setThinking(true);
+            await client.post('/events/getDayQueues', {"date" : selectedDate,"admin": user.myAdmin}, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => {
+                setThinking(false);
+                setCatchH(response.data.events);
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
     }, [selectedDate, indicator])
 
     const toggleOverlay = () => {
@@ -112,6 +202,9 @@ export default function Calendar(navigation) {
             setError(false);
         }, 5000)
     };
+
+   
+    
 
     return (
         
@@ -148,13 +241,13 @@ export default function Calendar(navigation) {
                 transparent={true}
                 >
                 
-                <Overlay isVisible={Success} onBackdropPress={toggleOverlay}>
-                    <View style={{height: 250,display: "flex", flexDirection:"column", width: 250, borderRadius:15,justifyContent:"center", alignItems:"center", backgroundColor:"#e5e5e8"}}>
+                <Overlay isVisible={Success} onBackdropPress={toggleOverlay} overlayStyle={{padding:0}}>
+                    <View style={{height: 300,display: "flex", flexDirection:"column", width: 300,justifyContent:"center", alignItems:"center", backgroundColor:"#e5e5e8"}}>
                         <Image
                             source={require('../assets/success.gif')}
-                            style={{height: 200,width:200}}
+                            style={{height: 270,width:270}}
                         />
-                        <Text style={{fontSize:15}}>התור נקבע בהצלחה!</Text>
+                        <Text style={{fontSize:19}}>התור נקבע בהצלחה!</Text>
                     </View>
                 </Overlay>
 
@@ -263,35 +356,43 @@ export default function Calendar(navigation) {
                     </LinearGradient>
                     
                     <View style={styles.FLcontainer}> 
-                        <FlatList  
-                            horizontal
-                            data={hours}
-                            renderItem={({item}) => {
-                                //check if hour is catched
-                                let flag = false;
-                                for(let x in catchH){
-                                    if(catchH[x] == item.hour){
-                                        flag = true;
+                        {
+                            selectedDate.getDay() != 5 && selectedDate.getDay() != 6 ?
+                            <FlatList  
+                                horizontal
+                                data={hours}
+                                renderItem={({item}) => {
+                                    //check if hour is catched
+                                    let flag = false;
+                                    for(let x in catchH){
+                                        if(catchH[x] == item.hour){
+                                            flag = true;
+                                        }
                                     }
-                                }
-                                if(flag){
-                                        item.color = 'white';
-                                        item.iscatched= true;
-                                        return <></>
-                                    }else{
-                                        item.color = 'white';
-                                        item.iscatched= false;
-                                        return  <TouchableOpacity onPress={() => {if(item.iscatched){console.log("catched " + item.hour)}else{setChoosenHour(item.hour); setMassage(!massage)}}}>
-                                                    <View style={[ styles.sectionBox, {backgroundColor: 'white'}] }>
-                                                        <FontAwesome name="calendar" size={27} color="#8785A2" />
-                                                        <Text style={{textAlign: 'right', fontSize: 19}}> {item.hour}:00</Text>
-                                                    </View>
-                                                </TouchableOpacity>
-                                    }
-                                    
-                            }}
-                            
-                        />
+                                    if(flag){
+                                            item.color = 'white';
+                                            item.iscatched= true;
+                                            return <></>
+                                        }else{
+                                            item.color = 'white';
+                                            item.iscatched= false;
+                                            return  <TouchableOpacity onPress={() => {if(item.iscatched){console.log("catched " + item.hour)}else{setChoosenHour(item.hour); setMassage(!massage)}}}>
+                                                        <View style={[ styles.sectionBox, {backgroundColor: 'white'}] }>
+                                                            <FontAwesome name="calendar" size={27} color="#8785A2" />
+                                                            <Text style={{textAlign: 'right', fontSize: 19}}> {item.hour}:00</Text>
+                                                        </View>
+                                                    </TouchableOpacity>
+                                        }
+                                        
+                                }}
+                                
+                            />
+
+                            :
+                            <View style={{height:90, justifyContent:"center", alignItems:"center"}}>
+                                <Text style={{fontSize:22}}>אין תורים ביום הזה</Text>
+                            </View>  
+                        }
                     </View>
                         </ScrollView>
                 </View>

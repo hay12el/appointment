@@ -228,7 +228,7 @@ export default function MyQueues({navigation}) {
                 :
                 
                 <FlatList
-                style={{paddingTop:10}}
+                style={{paddingTop:10,}}
                 data={queues}
                 renderItem={({ item }) => <Queue item={item} />}
                     keyExtractor={item => item._id}              

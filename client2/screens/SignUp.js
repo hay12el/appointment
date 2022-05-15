@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { Image, ScrollView , TouchableOpacity, SafeAreaView,StyleSheet , Text, Platform, Alert} from "react-native";
+import { Image, ScrollView , TouchableOpacity, SafeAreaView,StyleSheet, ActivityIndicator , Text, Platform, Alert} from "react-native";
 import { Formik} from "formik";
 import {LinearGradient} from 'expo-linear-gradient';
 import {
@@ -52,6 +52,7 @@ const validationSchema = yup.object().shape({
 });
 
 const SignUp = ({navigation}) => {
+    const [thinking, setThinking] = useState(false);
     const {Login} = useContext(UserContext);
     const [hidePassword, setHidePassword] = useState(true);
     const [hidePassword1, setHidePassword1] = useState(true);
@@ -63,7 +64,6 @@ const SignUp = ({navigation}) => {
         const currentDate = selectedDate || date;
         setDate(currentDate);
         if(Platform.OS === 'android') setShow(false);
-        console.log(currentDate);
         setDob(currentDate);
     }
 
@@ -72,7 +72,7 @@ const SignUp = ({navigation}) => {
     }
 
     const signup = async (values, formikActions) => {
-        console.log(errors.password);
+        setThinking(true);
         const res = await client.post('/users/register',{
             "username": values.name,
             "email": values.email,
@@ -84,12 +84,23 @@ const SignUp = ({navigation}) => {
             'Content-Type': 'application/json',
         }
         }).then(async (response) => {
-            await AsyncStorage.setItem('token', response.data.token);
-            const newUser = response.data.user;
-            Login(newUser._id, newUser.username, newUser.email, newUser.phone, newUser.queues);
+            setThinking(false);
+            if(!response.data.token){
+                showAlertSignOut("האימייל כבר קיים במערכת");
+            }else{
+                await AsyncStorage.setItem('token', response.data.token);
+                const newUser = response.data.user;
+                Login(newUser._id, newUser.username, newUser.email, newUser.phone, newUser.queues);
+            }
         }).catch((err) => {
             console.log(err);
         })
+    }
+
+    const showAlertSignOut = (err) => {
+        Alert.alert('בעיה', 
+                    err,
+                    [{text:'הבנתי'}])
     }
 
     return (
@@ -250,7 +261,12 @@ const SignUp = ({navigation}) => {
                 </Formik>
             </InnerContainer>
         </StyledContainer>
-        
+        <ActivityIndicator
+                            style={styles.loading}
+                            size="large" 
+                            color="#0000ff"
+                            animating={thinking}
+                            />
     </ScrollView>
     </SafeAreaView>
     );
@@ -281,6 +297,15 @@ const styles = StyleSheet.create({
         alignItems:"center",
         borderBottomRightRadius:25,  
         borderBottomLeftRadius:25,  
+    },
+    loading: {
+        position: 'absolute',
+        height:30,
+        width:78,
+        left: "40%",
+        top: "50%",
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     linearGradientIOS: {
         height: 180, 

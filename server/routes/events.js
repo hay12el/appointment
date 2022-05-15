@@ -24,7 +24,7 @@ router.post("/getDayQueues", async (req, res) => {
     var Day = new Date(year, month, day, 00);
     var nextDay = new Date(year, month, day+1, 00);
     console.log(req.body.admin);
-    await Event.find({time: {admin: req.body.admin,$gte: Day, 
+    await Event.find({admin: req.body.admin, time: {$gte: Day, 
                                            $lt: nextDay}}).then((response) => {
                                                const hours = response.map(x => new Date(x.time))
                                                const hoursToReturn = hours.map(x => x.getUTCHours())
@@ -165,14 +165,12 @@ router.post("/AdminDeleteQueue", async (req, res) => {
 ///////////////
 
 router.post("/AdminCatchQueue", async (req, res) => {
-    console.log(req.body);
     var dateObj = new Date(req.body.date);
     var month = dateObj.getUTCMonth(); //months from 1-12
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
     var hourN = req.body.hour;
     var time = new Date(year, month, day, hourN);
-    console.log(time);
 
     const queue = new Event({
         admin: req.body.userid,
@@ -261,7 +259,7 @@ router.post('/getMyQueue', async (req, res) => {
     const yesterdayDate = new Date(yesterday);
     let myQueues = await User.findOne({ _id: req.body.user.id })
     .populate({path: 'queues',
-               match: { time: {$gte: yesterdayDate}}})
+               match: { time: {$gte: yesterdayDate}}}).sort('-date')
     .exec((err, queueList) => {
         if (err) {
             res.send(err);

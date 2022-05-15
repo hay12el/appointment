@@ -57,17 +57,20 @@ router.post("/login", async (req, res) => {
 ///////////
 
 router.post("/register", async (req, res) => {
-    console.log(req.body);
     try{
-        const user = new User(req.body);
-        user.password = await bcrypt.hash(req.body.password, 10);
-        await user.save();
-        let newToken = jwt.sign({_id: user._id}, process.env.S, {expiresIn:"30 days"});
-        res.send({'token': newToken, 'user': user});
+        let user1 = await User.find({email: req.body.email});
+        if(user1.length != 0){
+            throw new Error('Required');
+        }else{
+            const user = new User(req.body);
+            user.password = await bcrypt.hash(req.body.password, 10);
+            await user.save();
+            let newToken = jwt.sign({_id: user._id}, process.env.S, {expiresIn:"30 days"});
+            res.send({'token': newToken, 'user': user});
+        }
     }
     catch(err){
-        console.log(err);
-        res.status(400).json({err:"האימייל כבר קיים במערכת."});
+        res.send(err);
     }
 });
 

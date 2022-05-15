@@ -24,7 +24,7 @@ import {
     TextLink,
     TextLinkContent
 } from './../components/styles'
-import {View, Text, Button, Image, StyleSheet} from 'react-native';
+import {View, Text, Button, Image, StyleSheet, ActivityIndicator,} from 'react-native';
 
 const {brand, derLight, primary} = Colors;
 
@@ -39,6 +39,7 @@ import Constants from "expo-constants";
 const StatusBarHeight = Constants.statusBarHeight;
 
 const Login = ({navigation}) => {
+    const [thinking, setThinking] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [hidePassword, setHidePassword] = useState(true);
@@ -47,6 +48,7 @@ const Login = ({navigation}) => {
     const {user, Login} = useContext(UserContext);
 
     const login = async (values, formikActions) => {
+        setThinking(true);
         const res = await client.post('/users/login', {...values}, {
         headers: {
             'Content-Type': 'application/json'
@@ -54,7 +56,7 @@ const Login = ({navigation}) => {
         }).then(async (response) => {
             await AsyncStorage.setItem('token', response.data.token);
             const newUser = response.data.user;
-            console.log(newUser);
+            setThinking(false);
             Login(newUser._id, newUser.username, newUser.email, newUser.phone, newUser.queues, newUser.isAdmin);
         }).catch((err) => {
             console.log(err);
@@ -122,6 +124,14 @@ const Login = ({navigation}) => {
 
 
                 </Formik>
+
+
+                <ActivityIndicator
+                            style={styles.loading}
+                            size="large" 
+                            color="#0000ff"
+                            animating={thinking}
+                            />
             </InnerContainer>
         </View>
     );
@@ -163,6 +173,15 @@ const styles = StyleSheet.create({
         alignItems:"center",
         borderRadius:25,  
     },
+      loading: {
+        position: 'absolute',
+        height:30,
+        width:78,
+        left: "40%",
+        top: "50%",
+        alignItems: 'center',
+        justifyContent: 'center'
+  },
 });
 
 export default Login;

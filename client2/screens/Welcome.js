@@ -7,7 +7,7 @@ import {
     StyledContainer,
     InnerContainer
 } from './../components/styles'
-import {View, Text, Alert ,Pressable,Image,TouchableOpacity,TouchableHighlight,StyleSheet, Linking, ScrollView,Button, Platform, Touchable, Modal} from 'react-native';
+import {View, Text, Alert , Image, TouchableOpacity, StyleSheet, Linking, ScrollView,Button, Platform, Pressable, Modal} from 'react-native';
 import {UserContext} from '../contexts/userContexts'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FlatList } from "react-native-gesture-handler";
@@ -48,9 +48,22 @@ const SECTIONS =
 
 const ListItem = ({ item }) => {
   const [open, setOpen] = useState(false);
+
+  const closeImage =() => {
+  if(open != false){
+    setOpen(false);
+  }
+}
+
+const OpenImage =() => {
+  if(open != true){
+    setOpen(true);
+  }
+}
+
   return (
     <View style={styles.item}>
-      <TouchableOpacity delayPressIn={80} onPressIn={()=> setOpen(!open)} onPressOut={()=> setOpen(!open) }>
+      <Pressable delayLongPress={100} onPressIn={console.log("")} onLongPress={()=>OpenImage()} onPressOut={()=> closeImage() }>
 
       <Image
         source={{
@@ -64,18 +77,21 @@ const ListItem = ({ item }) => {
        
         <Text style={{textAlign:'center',fontWeight: 'bold',color: "#364F6B"}}>{item.text}</Text>
       </View>
-      </TouchableOpacity>
+      </Pressable>
       {/* <Overlay isVisible={open} onBackdropPress={toggleOverlay}> */}
       <Overlay isVisible={open} overlayStyle={{padding:0}}>
+
           <View style={{height: 500,display: "flex", flexDirection:"column", width: 300, borderRadius:15,justifyContent:"center", alignItems:"center", backgroundColor:"#e5e5e8"}}>
+
             <Image
                 source={{
                   uri: item.uri,
                 }}
                 style={{height:"100%", width:"100%"}}
                 resizeMode="cover"
-            />
+                />
           </View>
+          
       </Overlay>
     </View>
   );
@@ -95,12 +111,12 @@ const Welcome = ({navigation}) => {
           }
     }
 
+
     
     return (
       <View style={{height: "100%", flex: 1, backgroundColor: "white", paddingTop: StatusBarHeight, paddingBottom: 80}}>
-
       {/* Log Out Alert */}
-      
+      <StatusBar style="light" />
       <Modal            
           animationType = {"fade"}  
           transparent = {true}  
@@ -138,7 +154,7 @@ const Welcome = ({navigation}) => {
 
 
 
-      <View style={{height: "100%", flex: 1}}>
+      <View style={{height: "100%", flex: 1, borderBottomRightRadius:25, borderBottomLeftRadius:25,  }}>
               {Platform.OS === "android"?
         
                   <LinearGradient colors={['#ffc7c7', '#ffc7c7', '#ffa8a8']} locations={[0.0, 0.70, 1.0]} style={styles.linearGradient}>
@@ -155,7 +171,7 @@ const Welcome = ({navigation}) => {
       <ScrollView>
 
         <StyledContainer>
-            <StatusBar style="dark" />
+           
             
             <InnerContainer>
                 {/* <PageLogo resizeMode="cover" source = {require('./../assets/lak.jpeg')}/> */}
@@ -327,7 +343,7 @@ const styles = StyleSheet.create({
       overflow: 'visible',
   },
   linearGradient: {
-
+        elevation:8,
         height: 180, 
         display: "flex",
         justifyContent:"center", 

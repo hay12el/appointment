@@ -104,6 +104,7 @@ export default function Admin_pannel({navigation}) {
     const Queue = ({item}) => {
         
         const deleteQueue = async (userid, postid, selectedDate) =>{
+            setThinking(true);
             await client.post("/events/AdminDeleteQueue", {'userid' : userid, 'postid': postid, 'date': selectedDate}, 
             { headers: {
                     'Content-Type': 'application/json'
@@ -112,6 +113,7 @@ export default function Admin_pannel({navigation}) {
             .then((response) =>{
                 setCatchH(response.data.events);
                 setIndicator(!indicator);
+                setThinking(false);
             })
             .catch((err) => {
                 console.log(err);
@@ -119,6 +121,7 @@ export default function Admin_pannel({navigation}) {
         }
 
         const catchQueue = async (userid, selectedDate, hour) =>{
+            setThinking(true);
             await client.post("/events/AdminCatchQueue", {'userid' : userid,'date': selectedDate, 'hour': hour}, 
             { 
                 headers: {
@@ -128,6 +131,7 @@ export default function Admin_pannel({navigation}) {
             .then((response) =>{
                 setCatchH(response.data.events);
                 setIndicator(!indicator);
+                setThinking(false);
             })
             .catch((err) => {
                 console.log(err);
@@ -264,36 +268,7 @@ export default function Admin_pannel({navigation}) {
                 </Overlay>
 
                 <View style={styles.container}>
-                    <Modal            
-                        animationType = {"slide"}  
-                        transparent = {true}  
-                        visible = {massage}  
-                        onRequestClose = {() =>{ console.log("Modal has been closed.") } }>  
-
-                        {/*All views of Modal*/}  
-                        <View style = {styles.modal}>  
-                            <Text style = {styles.text}>לקבוע לך תור לתאריך {selectedDate.getUTCDate()}/{selectedDate.getMonth() + 1} בשעה {choousenHour}:00 ?</Text>  
-                            <View style={styles.buttons}>
-
-                                    <Pressable
-                                        style={[styles.button, styles.buttonOpen]}
-                                        onPress={() => setMassage(!massage)}
-                                        >
-                                        <Text style={styles.textStyle}>ביטול</Text>
-                                    </Pressable>
-                                        
-                                    <Pressable
-                                        style={[styles.button, styles.buttonOpen]}
-                                        onPress={() => addQueue()}
-                                        >
-                                        <Text style={styles.textStyle}>כן אני אשמח :)</Text>
-                                    </Pressable>
-                                    
-                            </View>
-                        </View>  
-                    </Modal>  
-
-                    
+         
                     <CalendarPicker
                         startFromMonday={false}
                         
@@ -331,6 +306,8 @@ export default function Admin_pannel({navigation}) {
                         nextTitle="הבא"
                     />
                     <View style={styles.FLcontainer}>
+                        {
+                            selectedDate.getDay() != 5 && selectedDate.getDay() != 6 ?
                         <FlatList 
                             data={hours}
                             renderItem={({item}) => {
@@ -362,7 +339,12 @@ export default function Admin_pannel({navigation}) {
                             }}
                             
                         />
-
+                        
+                        :
+                            <View style={{height:90, justifyContent:"center", alignItems:"center"}}>
+                                <Text style={{fontSize:22}}>אין תורים ביום הזה</Text>
+                            </View>  
+                    }
 
                     </View>
                 </View>
