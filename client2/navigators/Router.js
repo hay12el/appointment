@@ -24,18 +24,21 @@ export const Router = () => {
       return () => console.log("useEffect");;
   }, [])
 
+  // for not auth users.
   if(!user.isAuthenticated){
     return (
       <NavigationContainer> 
         <AppStack />
       </NavigationContainer>
   );
+  // Admin Router.
   }else if(user.isAdmin){
     return (
       <NavigationContainer>
           <AdminStackscreen />   
       </NavigationContainer>
     );
+  // Auth router. 
   }else{
       return (
         <NavigationContainer>

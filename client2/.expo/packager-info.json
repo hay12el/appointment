@@ -1,6 +1,6 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
+  "expoServerPort": null,
   "packagerPort": 19000,
   "packagerPid": null,
   "expoServerNgrokUrl": "https://67-y3k.hay12el.client2.exp.direct",

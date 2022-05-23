@@ -11,6 +11,7 @@ import Welcome_admin from '../screens/Welcome_admin'
 
 
 const Stack = createStackNavigator();
+
 export const AppStack = () =>{
     return (
             <Stack.Navigator
@@ -38,7 +39,7 @@ export const AuthStackscreen = () => {
         <Stack.Navigator
         initialRouteName="Welcome"
         >
-            <Stack.Screen name="Admin_pannel" component={Admin_pannel} options={{headerShown: false}} />
+            {/* <Stack.Screen name="Admin_pannel" component={Admin_pannel} options={{headerShown: false}} /> */}
             <Stack.Screen name="Welcome" component={Welcome} options={{headerShown: false}} />
             <Stack.Screen name="MyQueues" component={MyQueues} options={{headerShown: false}} />
         </Stack.Navigator>

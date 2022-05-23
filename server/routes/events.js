@@ -17,12 +17,12 @@ router.use(bodyParser.urlencoded({
 /////////////////
 
 router.post("/getDayQueues", async (req, res) => {
-    var dateObj = new Date(req.body.date);
-    var month = dateObj.getUTCMonth(); //months from 1-12
-    var day = dateObj.getUTCDate();
-    var year = dateObj.getUTCFullYear();
-    var Day = new Date(year, month, day, 00);
-    var nextDay = new Date(year, month, day+1, 00);
+    const dateObj = new Date(req.body.date);
+    const month = dateObj.getUTCMonth(); //months from 1-12
+    const day = dateObj.getUTCDate();
+    const year = dateObj.getUTCFullYear();
+    const Day = new Date(year, month, day, 00);
+    const nextDay = new Date(year, month, day + 1, 00);
     console.log(req.body.admin);
     await Event.find({admin: req.body.admin, time: {$gte: Day, 
                                            $lt: nextDay}}).then((response) => {
@@ -40,12 +40,12 @@ router.post("/getDayQueues", async (req, res) => {
 /////////////////
 
 router.post("/addQueue", async (req, res) => {
-    var dateObj = new Date(req.body.time);
-    var month = dateObj.getUTCMonth(); //months from 1-12
-    var day = dateObj.getUTCDate();
-    var year = dateObj.getUTCFullYear();
-    var hourN = req.body.hour;
-    var time = new Date(year, month, day, hourN + 3);
+    const dateObj = new Date(req.body.time);
+    const month = dateObj.getUTCMonth(); //months from 1-12
+    const day = dateObj.getUTCDate();
+    const year = dateObj.getUTCFullYear();
+    const hourN = req.body.hour;
+    const time = new Date(year, month, day, hourN + 3);
    
     let tomorowDate = new Date(year, month, day + 5, hourN + 3);
     let yesterdayDate = new Date(year, month, day - 5, hourN + 3);
@@ -133,20 +133,22 @@ router.post("/AdminDeleteQueue", async (req, res) => {
     const Theuser = async(x) => { 
         return await User.find({_id: x});
     }
-    var dateObj = new Date(req.body.date);
-    var month = dateObj.getUTCMonth(); //months from 1-12
-    var day = dateObj.getUTCDate();
-    var year = dateObj.getUTCFullYear();
-    var Day = new Date(year, month, day, 00);
-    var nextDay = new Date(year, month, day+1, 00);
+    const dateObj = new Date(req.body.date);
+    const month = dateObj.getUTCMonth(); //months from 1-12
+    const day = dateObj.getUTCDate();
+    const year = dateObj.getUTCFullYear();
+    const Day = new Date(year, month, day, 00);
+    const nextDay = new Date(year, month, day + 1, 00);
     await Event.find({time: {$gte: Day, 
                                 $lt: nextDay}}).then(async(response) => {
-                                               var s = [];
+                                               const s = [];
                                                
                                                for (var i = 0; i < response.length; i++) {
-                                                    var temp = {};
+                                                    const temp = {};
                                                     temp["postId"] = response[i]._id
-                                                    var h = new Date(response[i].time);
+                                                    const h = new Date(
+                                                      response[i].time
+                                                    );
                                                     temp["hour"] = h.getUTCHours();
                                                     h = (response[i].connectTo).toString();
                                                     console.log(h);
@@ -165,12 +167,12 @@ router.post("/AdminDeleteQueue", async (req, res) => {
 ///////////////
 
 router.post("/AdminCatchQueue", async (req, res) => {
-    var dateObj = new Date(req.body.date);
-    var month = dateObj.getUTCMonth(); //months from 1-12
-    var day = dateObj.getUTCDate();
-    var year = dateObj.getUTCFullYear();
-    var hourN = req.body.hour;
-    var time = new Date(year, month, day, hourN);
+    const dateObj = new Date(req.body.date);
+    const month = dateObj.getUTCMonth(); //months from 1-12
+    const day = dateObj.getUTCDate();
+    const year = dateObj.getUTCFullYear();
+    const hourN = req.body.hour;
+    const time = new Date(year, month, day, hourN);
 
     const queue = new Event({
         admin: req.body.userid,
@@ -189,16 +191,16 @@ router.post("/AdminCatchQueue", async (req, res) => {
     const Theuser = async(x) => { 
         return await User.find({_id: x});
     }
-    var Day = new Date(year, month, day, 00);
-    var nextDay = new Date(year, month, day+1, 00);
+    const Day = new Date(year, month, day, 00);
+    const nextDay = new Date(year, month, day + 1, 00);
     await Event.find({time: {$gte: Day, 
                                 $lt: nextDay}}).then(async(response) => {
-                                               var s = [];
+                                               const s = [];
                                                console.log(response);
-                                               for (var i = 0; i < response.length; i++) {
-                                                    var temp = {};
+                                               for (const i = 0; i < response.length; i++) {
+                                                    const temp = {};
                                                     temp["postId"] = response[i]._id
-                                                    var h = new Date(response[i].time);
+                                                    const h = new Date(response[i].time);
                                                     temp["hour"] = h.getUTCHours();
                                                     h = (response[i].connectTo).toString();
                                                     console.log(h);
@@ -221,21 +223,23 @@ router.post("/AdminGetDayQueues", async (req, res) => {
         return await User.find({_id: x});
     }
     
-    var dateObj = new Date(req.body.date);
-    var month = dateObj.getUTCMonth(); //months from 1-12
-    var day = dateObj.getUTCDate();
-    var year = dateObj.getUTCFullYear();
-    var Day = new Date(year, month, day, 00);
-    var nextDay = new Date(year, month, day+1, 00);
-    var id = req.body.user;
+    const dateObj = new Date(req.body.date);
+    const month = dateObj.getUTCMonth(); //months from 1-12
+    const day = dateObj.getUTCDate();
+    const year = dateObj.getUTCFullYear();
+    const Day = new Date(year, month, day, 00);
+    const nextDay = new Date(year, month, day + 1, 00);
+    const id = req.body.user;
     await Event.find({admin: id,time: {$gte: Day, 
                                 $lt: nextDay}}).then(async(response) => {
-                                               var s = [];
+                                               const s = [];
                                                
                                                for (var i = 0; i < response.length; i++) {
-                                                    var temp = {};
+                                                    const temp = {};
                                                     temp["postId"] = response[i]._id
-                                                    var h = new Date(response[i].time);
+                                                    const h = new Date(
+                                                      response[i].time
+                                                    );
                                                     temp["hour"] = h.getUTCHours();
                                                     h = (response[i].connectTo).toString();
                                                     
@@ -254,18 +258,18 @@ router.post("/AdminGetDayQueues", async (req, res) => {
 ///////////////
 
 router.post('/getMyQueue', async (req, res) => {
-    var today = new Date();
-    var yesterday = today - 24*60*60*1000;
+    const today = new Date();
+    const yesterday = today - 24 * 60 * 60 * 1000;
     const yesterdayDate = new Date(yesterday);
-    let myQueues = await User.findOne({ _id: req.body.user.id })
-    .populate({path: 'queues',
-               match: { time: {$gte: yesterdayDate}}}).sort('-date')
-    .exec((err, queueList) => {
+    const myQueues = await User.findOne({ _id: req.body.user.id })
+      .populate({ path: "queues", match: { time: { $gte: yesterdayDate } } })
+      .sort("-date")
+      .exec((err, queueList) => {
         if (err) {
-            res.send(err);
+          res.send(err);
         }
         res.send(queueList.queues);
-    });
+      });
 });
 
 module.exports = router;
