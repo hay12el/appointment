@@ -63,7 +63,7 @@ const SECTIONS = [
   },
 ];
 
-// Image 
+// Image
 const ListItem = ({ item }) => {
   const [open, setOpen] = useState(false);
 
@@ -445,12 +445,20 @@ const Welcome = ({ navigation }) => {
             {/* Icons Bar */}
             <View style={styles.IconBar}>
               {/* Instegram Icon */}
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL(`https://www.instagram.com/`);
+                }}
+              >
                 <AntDesign name="instagram" size={40} color="black" />
               </TouchableOpacity>
 
               {/* Tiktok Icon */}
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL(`https://www.tiktok.com/en/`);
+                }}
+              >
                 <Image
                   style={styles.tinyLogo}
                   source={require("../assets/tik-tok.png")}
@@ -458,7 +466,11 @@ const Welcome = ({ navigation }) => {
               </TouchableOpacity>
 
               {/* Whatsapp Icon */}
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL(`https://wa.me/+972545806799`);
+                }}
+              >
                 <FontAwesome5 name="whatsapp" size={40} color="black" />
               </TouchableOpacity>
             </View>

@@ -315,12 +315,13 @@ export default function Admin_pannel({navigation}) {
                                 let flag = false;
                                 let user = {};
                                 let pId = "";
+                                let rightHour = item.hour +3;
                                 //console.log(item);
                                 for(let x in catchH){
-                                    if(catchH[x].hour == item.hour){
-                                        flag = true;
-                                        user = catchH[x].user[0];
-                                        pId = catchH[x].postId;
+                                    if (catchH[x].hour == rightHour) {
+                                      flag = true;
+                                      user = catchH[x].user[0];
+                                      pId = catchH[x].postId;
                                     }
                                 }
                                 if(flag){
