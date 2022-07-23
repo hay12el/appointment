@@ -23,7 +23,7 @@
     "android": {
       "package": "com.RNAppointment.yourappname",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon1.png",
         "backgroundColor": "#FFFFFF"
       }
     },

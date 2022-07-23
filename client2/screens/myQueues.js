@@ -1,35 +1,25 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
+import NavBar from "../utils/NavBar";
+import { StatusBar } from "expo-status-bar";
 import {
   Image,
   StyleSheet,
   View,
-  Button,
   Pressable,
   FlatList,
-  TouchableOpacity,
-  Linking,
-  Alert,
   Animated,
   ActivityIndicator,
   Modal,
   Text,
   Platform,
 } from "react-native";
-import Calendar from "./newQueue";
-import {
-  Entypo,
-  MaterialIcons,
-  FontAwesome5,
-  Ionicons,
-  FontAwesome,
-} from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import client from "../api/client";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserContext } from "../contexts/userContexts";
-import { StyledContainer } from "./../components/styles";
 import { LinearGradient } from "expo-linear-gradient";
-import { API, ADMIN_ID } from "@env";
 import Constants from "expo-constants";
+import Message from "../utils/message";
 
 const StatusBarHeight = Constants.statusBarHeight;
 
@@ -89,6 +79,7 @@ export default function MyQueues({ navigation }) {
           marginBottom: 20,
         }}
       >
+        <StatusBar style="dark" backgroundColor="#ffc7c7" />
         <View
           style={{
             position: "absolute",
@@ -137,48 +128,12 @@ export default function MyQueues({ navigation }) {
 
         {/* deleting queue alert */}
 
-        <Modal
-          animationType={"fade"}
-          transparent={true}
-          visible={delete1}
-          onRequestClose={() => setDelete(!delete1)}
-        >
-          {/*All views of Modal*/}
-          <View style={styles.modal}>
-            <View
-              style={{
-                flex: 2,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text>האם את בטוחה שאת רוצה לבטל את התור?</Text>
-            </View>
-            <View style={[styles.buttons, { flex: 1 }]}>
-              <Pressable onPress={() => setDelete(!delete1)}>
-                <LinearGradient
-                  colors={["#FFE2E2", "#fad4d4", "#e8b7b7"]}
-                  locations={[0.0, 0.5, 1.0]}
-                  style={[styles.button, styles.buttonOpen]}
-                >
-                  <Text style={styles.textStyle}>ביטול</Text>
-                </LinearGradient>
-              </Pressable>
-
-              <Pressable onPress={() => deleteQueue(item._id)}>
-                <LinearGradient
-                  colors={["#FFE2E2", "#fad4d4", "#e8b7b7"]}
-                  locations={[0.0, 0.5, 1.0]}
-                  style={[styles.button, styles.buttonOpen]}
-                >
-                  <Text style={styles.textStyle}>כן</Text>
-                </LinearGradient>
-              </Pressable>
-            </View>
-          </View>
-        </Modal>
-
-        {/* deleting queue alert */}
+        <Message
+          text="האם את בטוחה שאת רוצה לבטל את התור?"
+          action={() => deleteQueue(item._id)}
+          open={delete1}
+          onClose={() => setDelete(false)}
+        />
       </Animated.View>
     );
   };
@@ -244,42 +199,12 @@ export default function MyQueues({ navigation }) {
     >
       {/* Log Out Alert */}
 
-      <Modal
-        animationType={"fade"}
-        transparent={true}
-        visible={massage}
-        onRequestClose={() => setMassage(!massage)}
-      >
-        {/*All views of Modal*/}
-        <View style={styles.modal}>
-          <View
-            style={{ flex: 2, justifyContent: "center", alignItems: "center" }}
-          >
-            <Text>האם את בטוחה שאת רוצה להתנתק?</Text>
-          </View>
-          <View style={[styles.buttons, { flex: 1 }]}>
-            <Pressable onPress={() => setMassage(!massage)}>
-              <LinearGradient
-                colors={["#FFE2E2", "#fad4d4", "#e8b7b7"]}
-                locations={[0.0, 0.5, 1.0]}
-                style={[styles.button, styles.buttonOpen]}
-              >
-                <Text style={styles.textStyle}>ביטול</Text>
-              </LinearGradient>
-            </Pressable>
-
-            <Pressable onPress={() => logout()}>
-              <LinearGradient
-                colors={["#FFE2E2", "#fad4d4", "#e8b7b7"]}
-                locations={[0.0, 0.5, 1.0]}
-                style={[styles.button, styles.buttonOpen]}
-              >
-                <Text style={styles.textStyle}>כן</Text>
-              </LinearGradient>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
+      <Message
+        text="האם את בטוחה שאת רוצה להתנתק?"
+        action={logout}
+        open={massage}
+        onClose={() => setMassage(false)}
+      />
 
       {/* Log Out Alert */}
 
@@ -333,76 +258,7 @@ export default function MyQueues({ navigation }) {
         animating={thinking}
       />
 
-      {/* Navigation Bar */}
-      <View
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignContent: "center",
-          position: "absolute",
-          bottom: 32,
-          right: 0,
-          width: "100%",
-        }}
-      >
-        <View style={{ display: "flex", alignItems: "center" }}>
-          <LinearGradient
-            colors={["#FFE2E2", "#fad4d4", "#e8a9a9"]}
-            locations={[0, 0.5, 1]}
-            style={styles.menuNavigator}
-          >
-            <TouchableOpacity onPress={() => navigation.navigate("Welcome")}>
-              <Ionicons name="home-outline" size={30} color="#364F6B" />
-            </TouchableOpacity>
-
-            {Platform.OS === "android" ? (
-              <LinearGradient
-                colors={["#FFE2E2", "#fad4d4", "#f08b8b"]}
-                style={{
-                  height: 50,
-                  width: 50,
-                  elevation: 1,
-                  borderRadius: 100,
-                  backgroundColor: "#FFE2E2",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("MyQueues")}
-                >
-                  <FontAwesome name="calendar" size={28} color="#364F6B" />
-                </TouchableOpacity>
-              </LinearGradient>
-            ) : (
-              <TouchableOpacity onPress={() => navigation.navigate("MyQueues")}>
-                <FontAwesome name="calendar" size={28} color="#364F6B" />
-              </TouchableOpacity>
-            )}
-
-            {/* Calendar model */}
-            <View style={{ position: "absolute", right: "53%", bottom: 65 }}>
-              <Calendar />
-            </View>
-            {/* Calendar model */}
-
-            <TouchableOpacity
-              onPress={() =>
-                Linking.openURL(
-                  "https://ul.waze.com/ul?ll=31.24937992%2C34.78982806&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location"
-                )
-              }
-            >
-              <FontAwesome5 name="waze" size={29} color="#364F6B" />
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => setMassage(!massage)}>
-              <Entypo name="log-out" size={29} color="#364F6B" />
-            </TouchableOpacity>
-          </LinearGradient>
-        </View>
-      </View>
-      {/* Navigation Bar */}
+      <NavBar />
     </View>
   );
 }
@@ -432,23 +288,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  menuNavigator: {
-    direction: "rtl",
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "#FFC7C7",
-    width: "95%",
-    height: 70,
-    borderRadius: 15,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
-    elevation: 2,
-    paddingHorizontal: 22,
-  },
+
   queues: {
     borderWidth: 1,
     borderColor: "black",
